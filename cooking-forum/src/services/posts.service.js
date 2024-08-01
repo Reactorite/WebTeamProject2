@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey } from 'firebase/database';
 import { db } from '../config/firebase-config'
 
@@ -51,6 +52,13 @@ export const likePost = (handle, postId) => {
   return update(ref(db), updateObject);
 };
 
+export const likePostCount = async (postId) => {
+  const snapshot = await get(ref(db, `posts/${postId}/likedBy`));
+  if (!snapshot.exists()) return 0;
+
+  return Object.keys(snapshot.val()).length;
+};
+
 export const dislikePost = (handle, postId) => {
   const updateObject = {
     [`posts/${postId}/likedBy/${handle}`]: null,
@@ -97,15 +105,15 @@ export const dislikePost = (handle, postId) => {
 // };
 
 // /**
-//  * 
+//  *
 //  * @param {{
 // *  id: number,
 // *  title: string,
 // *  content: string,
 // *  createdOn: string,
 // *  liked: boolean
-// * }} tweet 
-//  * @returns 
+// * }} tweet
+//  * @returns
 //  */
 // export const updateTweet = async (tweet) => {
 //   const response = await fetch(`http://127.0.0.1:3000/tweets/${tweet.id}`, {
