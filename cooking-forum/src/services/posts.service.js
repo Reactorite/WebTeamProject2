@@ -23,6 +23,8 @@ export const getAllPosts = async (search = '') => {
   return posts;
 };
 
+// export const getRecentPosts = async ()
+
 export const getPostById = async (id) => {
   const snapshot = await get(ref(db, `posts/${id}`));
   if (!snapshot.exists()) {
