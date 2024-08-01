@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { getPostById } from "../services/posts.service";
+// import { getPostById } from "../services/posts.service";
 import { onValue, ref } from "firebase/database";
 import { db } from "../config/firebase-config";
 import Post from "../components/Post";
+import CreateComment from "./CreateComment.jsx";
 
 export default function SinglePost() {
   const [post, setPost] = useState(null);
@@ -29,6 +30,9 @@ export default function SinglePost() {
     <div>
       <h1>Single post</h1>
       { post && <Post post={post}/> }
+      <button>Edit</button>
+      <h2>Comments:</h2>
+      <CreateComment postId={ id } />
     </div>
   )
 }

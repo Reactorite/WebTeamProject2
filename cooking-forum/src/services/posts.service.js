@@ -68,6 +68,15 @@ export const dislikePost = (handle, postId) => {
   return update(ref(db), updateObject);
 };
 
+export const createComment = async (author, content, postId) => {
+  const comment = { author, content, createdOn: new Date().toString() };
+  const result = await push(ref(db, `posts/${postId}/comments`), comment);
+  // const id = result.key;
+  // await update(ref(db), {
+  //   [`posts/${postId}/comments/${id}`]: comment,
+  // });
+};
+
 // export const createTweet = async (title, content) => {
 //   const response = await fetch('http://127.0.0.1:3000/tweets', {
 //     method: 'POST',
