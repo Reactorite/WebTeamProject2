@@ -15,6 +15,7 @@ import Register from './views/Register';
 import { auth } from './config/firebase-config';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getUserData } from './services/users.service';
+import Footer from './components/Footer'
 
 function App() {
   const [appState, setAppState] = useState({
@@ -51,7 +52,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
-        <footer>&copy;2024</footer>
+        <Footer />
       </AppContext.Provider>
     </BrowserRouter>
   )

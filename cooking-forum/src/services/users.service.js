@@ -15,3 +15,10 @@ export const getUserData = async (uid) => {
   const snapshot = await get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
   return snapshot.val();
 };
+
+export const getUserCount = async () => {
+  const snapshot = await get(ref(db, 'users'));
+  if (!snapshot.exists()) return 0;
+
+  return Object.keys(snapshot.val()).length;
+};
