@@ -1,0 +1,24 @@
+{
+  "users": {
+    "Pesho": {
+      "uid": "EKcj9ej9KLL",
+      "name": "Pesho",
+      "createOn": "12-12-2024"
+    },
+    "Gosho": {
+      "uid": "JKSD00dfjjkk",
+      "name": "Gosho",
+      "createOn": "12-12-2024"
+    }
+  },
+  "tweets": {
+    "-Mnjdijfoij": {
+      "title": "Hi",
+      "content": "hello there",
+      "createOn": "12-12-2024",
+      "likedBy": {
+        "Pesho": true
+      }
+    }
+  }
+}
