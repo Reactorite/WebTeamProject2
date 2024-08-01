@@ -1,11 +1,11 @@
 import PropType from 'prop-types';
 import { useContext } from 'react';
 import { AppContext } from '../state/app.context';
-import { dislikeTweet, likeTweet } from '../services/tweets.service';
+import { dislikePost, likePost } from '../services/posts.service';
 
 /**
  * 
- * @param {{ tweet: {
+ * @param {{ post: {
  *  id: string,
  *  author: string,
  *  title: string,
@@ -15,15 +15,15 @@ import { dislikeTweet, likeTweet } from '../services/tweets.service';
  * } }} props 
  * @returns 
  */
-export default function Tweet({ tweet }) {
+export default function Post({ post }) {
   const { userData } = useContext(AppContext);
   const toggleLike = async () => {
-    const isLiked = tweet.likedBy.includes(userData.handle);
+    const isLiked = post.likedBy.includes(userData.handle);
     try {
       if (isLiked) {
-        await dislikeTweet(userData.handle, tweet.id);
+        await dislikePost(userData.handle, post.id);
       } else {
-        await likeTweet(userData.handle, tweet.id);
+        await likePost(userData.handle, post.id);
       }
     } catch (error) {
       alert(error.message);
@@ -32,16 +32,16 @@ export default function Tweet({ tweet }) {
 
   return (
     <div>
-      <h3>{tweet.title}</h3>
-      <p>{tweet.content}</p>
-      <p>Created on: {new Date(tweet.createdOn).toLocaleDateString()}</p>
-      <button onClick={toggleLike}>{tweet.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
+      <h3>{post.title}</h3>
+      <p>{post.content}</p>
+      <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
+      <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
     </div>
   )
 }
 
-Tweet.propTypes = {
-  tweet: PropType.shape({
+Post.propTypes = {
+  post: PropType.shape({
     id: PropType.string,
     author: PropType.string,
     title: PropType.string,

@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
 import './App.css'
 import Home from './views/Home'
-import AllTweets from './views/AllTweets';
-import CreateTweet from './views/CreateTweet';
+import Posts from './views/Posts'
+import CreatePost from './views/CreatePost'
+import SinglePost from './views/SinglePost'
 import Header from './components/Header';
 import Effects from './views/Effects';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NotFound from './views/NotFound';
-import SingleTweet from './views/SingleTweet';
 import { AppContext } from './state/app.context';
 import Login from './views/Login';
 import Authenticated from './hoc/Authenticated';
@@ -43,9 +43,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/tweets' element={<Authenticated><AllTweets /></Authenticated>} /> 
-          <Route path='/tweets/:id' element={<Authenticated><SingleTweet /></Authenticated>} />
-          <Route path='/tweets-create' element={<Authenticated><CreateTweet /></Authenticated>} />
+          <Route path='/posts' element={<Authenticated><Posts /></Authenticated>} /> 
+          <Route path='/posts/:id' element={<Authenticated><SinglePost /></Authenticated>} />
+          <Route path='/posts-create' element={<Authenticated><CreatePost /></Authenticated>} />
           <Route path='/effects' element={<Authenticated><Effects /></Authenticated>} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />

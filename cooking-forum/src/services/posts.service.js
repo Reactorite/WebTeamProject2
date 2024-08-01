@@ -1,32 +1,32 @@
 import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey } from 'firebase/database';
 import { db } from '../config/firebase-config'
 
-export const createTweet = async (author, title, content) => {
-  const tweet = { author, title, content, createdOn: new Date().toString() };
-  const result = await push(ref(db, 'tweets'), tweet);
+export const createPost = async (author, title, content) => {
+  const post = { author, title, content, createdOn: new Date().toString() };
+  const result = await push(ref(db, 'posts'), post);
   const id = result.key;
   await update(ref(db), {
-    [`tweets/${id}/id`]: id,
+    [`posts/${id}/id`]: id,
   });
 };
 
-export const getAllTweets = async (search = '') => {
-  const snapshot = await get(ref(db, 'tweets'));
+export const getAllPosts = async (search = '') => {
+  const snapshot = await get(ref(db, 'posts'));
   if (!snapshot.exists()) return [];
 
-  const tweets = Object.values(snapshot.val());
+  const posts = Object.values(snapshot.val());
 
   if (search) {
-    return tweets.filter(t => t.title.toLowerCase().includes(search.toLowerCase()));
+    return posts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
   }
 
-  return tweets;
+  return posts;
 };
 
-export const getTweetById = async (id) => {
-  const snapshot = await get(ref(db, `tweets/${id}`));
+export const getPostById = async (id) => {
+  const snapshot = await get(ref(db, `posts/${id}`));
   if (!snapshot.exists()) {
-    throw new Error('Tweet not found!');
+    throw new Error('Post not found!');
   }
 
   return {
@@ -35,19 +35,19 @@ export const getTweetById = async (id) => {
   };
 };
 
-export const likeTweet = (handle, tweetId) => {
+export const likePost = (handle, postId) => {
   const updateObject = {
-    [`tweets/${tweetId}/likedBy/${handle}`]: true,
-    [`users/${handle}/likedTweets/${tweetId}`]: true,
+    [`posts/${postId}/likedBy/${handle}`]: true,
+    [`users/${handle}/likePost/${postId}`]: true,
   };
 
   return update(ref(db), updateObject);
 };
 
-export const dislikeTweet = (handle, tweetId) => {
+export const dislikePost = (handle, postId) => {
   const updateObject = {
-    [`tweets/${tweetId}/likedBy/${handle}`]: null,
-    [`users/${handle}/likedTweets/${tweetId}`]: null,
+    [`posts/${postId}/likedBy/${handle}`]: null,
+    [`users/${handle}/likePost/${postId}`]: null,
   };
 
   return update(ref(db), updateObject);

@@ -15,12 +15,12 @@ export default function Header() {
 
   return (
     <header>
-      <h1>Not Twitter App</h1>
+      <h1>Gourmet Galaxy</h1>
       <nav>
         <NavLink to="/">Home</NavLink>
         {user && (<>
-          <NavLink to="/tweets">All tweets</NavLink>
-          <NavLink to="/tweets-create">Create tweet</NavLink>
+          <NavLink to="/posts">All posts</NavLink>
+          <NavLink to="/posts-create">Create posts</NavLink>
           <NavLink to="/effects">Test effects</NavLink>
         </>)}
         {!user && <NavLink to="/login">Login</NavLink>}

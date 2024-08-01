@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react"
-import { getAllTweets } from "../services/tweets.service";
+import { getAllPosts } from "../services/posts.service";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function AllTweets() {
-  const [tweets, setTweets] = useState([]);
+export default function Posts() {
+  const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') ?? '';
 
-  console.log(tweets);
+  console.log(posts);
 
   useEffect(() => {
-    getAllTweets(search)
-      .then(tweets => setTweets(tweets))
+    getAllPosts(search)
+      .then(posts => setPosts(posts))
       .catch(error => alert(error.message));
     // (async() => {
     //   try {
@@ -41,12 +41,12 @@ export default function AllTweets() {
 
   return (
     <div>
-      <h1>Tweets:</h1>
+      <h1>Posts:</h1>
       <label htmlFor="search"></label>
       <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/><br/>
-      {tweets.length > 0
-      ? tweets.map(t => <p key={t.id}>{t.title.slice(0, 5)}... <button onClick={() => navigate(`/tweets/${t.id}`)}>See more</button></p>)
-      : 'No tweets'
+      {posts.length > 0
+      ? posts.map(p => <p key={p.id}>{p.title} <button onClick={() => navigate(`/posts/${p.id}`)}>See more</button></p>)
+      : 'No Posts'
       }
     </div>
   )
