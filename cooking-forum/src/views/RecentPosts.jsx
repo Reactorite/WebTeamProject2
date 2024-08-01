@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const RecentPosts = ({ title, content, createdOn }) => {
 
     return (
@@ -10,3 +12,9 @@ const RecentPosts = ({ title, content, createdOn }) => {
 }
 
 export default RecentPosts
+
+RecentPosts.propTypes = {
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    createdOn: PropTypes.string.isRequired
+};
