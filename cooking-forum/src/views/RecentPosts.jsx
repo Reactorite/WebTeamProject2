@@ -8,13 +8,13 @@ const RecentPosts = ({ title, content, createdOn }) => {
             <p>{content}</p>
             <p>{createdOn}</p>
         </div>
-    )
+    );
 }
-
-export default RecentPosts
 
 RecentPosts.propTypes = {
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     createdOn: PropTypes.string.isRequired
 };
+
+export default RecentPosts;
