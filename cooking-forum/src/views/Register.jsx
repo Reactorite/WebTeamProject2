@@ -8,6 +8,8 @@ export default function Register() {
   const [user, setUser] = useState({
     handle: '',
     email: '',
+    firstName: '',
+    lastName: '',
     password: '',
   });
   const { setAppState } = useContext(AppContext);
@@ -31,7 +33,7 @@ export default function Register() {
         return alert(`User {${user.handle}} already exists!`);
       }
       const credential = await registerUser(user.email, user.password);
-      await createUserHandle(user.handle, credential.user.uid, user.email);
+      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email);
       setAppState({ user: credential.user, userData: null });
       navigate('/');
     } catch (error) {
@@ -42,10 +44,14 @@ export default function Register() {
   return (
     <>
       <h1>Register</h1>
-      <label htmlFor="handle">Handle: </label>
+      <label htmlFor="handle">Username: </label>
       <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" id="handle" /><br /><br />
       <label htmlFor="email">Email: </label>
       <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" /><br /><br />
+      <label htmlFor="firstName">First name: </label>
+      <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" id="firstName" /><br /><br />
+      <label htmlFor="lastName">Last name: </label>
+      <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
       <label htmlFor="password">Password: </label>
       <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br />
       <button onClick={register}>Register</button>
