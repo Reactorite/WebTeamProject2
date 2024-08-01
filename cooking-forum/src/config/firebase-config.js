@@ -3,13 +3,14 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC2cLBFaSICqW0e7ISgJ5Wq-u3Np3dk2h8",
-  authDomain: "not-twitter-a62.firebaseapp.com",
-  projectId: "not-twitter-a62",
-  storageBucket: "not-twitter-a62.appspot.com",
-  messagingSenderId: "484648585008",
-  appId: "1:484648585008:web:3c4d47b48c0686035beaf5",
-  databaseURL: "https://not-twitter-a62-default-rtdb.europe-west1.firebasedatabase.app/"
+  apiKey: "AIzaSyBCcBfVihNGSboXxGRo_aS8-71dFgL8k_g",
+  authDomain: "webteamproject2.firebaseapp.com",
+  projectId: "webteamproject2",
+  storageBucket: "webteamproject2.appspot.com",
+  messagingSenderId: "352863300996",
+  appId: "1:352863300996:web:8ed587c419b8df7924c1d1",
+  // measurementId: "G-1BLW2S4JLH",
+  databaseURL: "https://webteamproject2-default-rtdb.europe-west1.firebasedatabase.app/"
 };
 
 // Initialize Firebase
