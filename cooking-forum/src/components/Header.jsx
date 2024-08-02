@@ -33,7 +33,7 @@ export default function Header() {
         {!user && <NavLink to="/login">Login</NavLink>}
         {!user && <NavLink to="/register">Register</NavLink>}
         {user && <button onClick={logout}>Logout</button>}
-        {userData && <span>Welcome, {userData.handle}</span>}
+        {userData && <NavLink to="/user">User</NavLink>}
       </nav>
     </header>
   );
