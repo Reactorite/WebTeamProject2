@@ -24,13 +24,6 @@ export const getAllPosts = async (search = '') => {
   return posts;
 };
 
-export const getPostCount = async () => {
-  const snapshot = await get(ref(db, 'posts'));
-  if (!snapshot.exists()) return 0;
-
-  return Object.keys(snapshot.val()).length;
-};
-
 export const getPostById = async (id) => {
   const snapshot = await get(ref(db, `posts/${id}`));
   if (!snapshot.exists()) {
@@ -80,6 +73,15 @@ export const createComment = async (author, content, postId) => {
 export const editPost = async (id, title, content) => {
   await update(ref(db, `posts/${id}`), { title, content });
 };
+
+export const deletePost = async (postId) => {
+  return remove(ref(db, `posts/${postId}`));
+};
+
+export const deleteComment = async (postId, commentId) => {
+  return remove(ref(db, `posts/${postId}/comments/${commentId}`));
+};
+
 
 // export const createTweet = async (title, content) => {
 //   const response = await fetch('http://127.0.0.1:3000/tweets', {

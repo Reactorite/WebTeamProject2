@@ -1,23 +1,29 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { ref, onValue, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import Post from '../components/Post';
 import CreateComment from './CreateComment';
+import { useNavigate, useParams } from "react-router-dom"
+import { deletePost } from "../services/posts.service.js";
 
 export default function SinglePost() {
   const [post, setPost] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     return onValue(ref(db, `posts/${id}`), snapshot => {
       const updatedPost = snapshot.val();
-      setPost({
-        ...updatedPost,
-        likedBy: Object.keys(updatedPost.likedBy ?? {}),
-      });
+      if (updatedPost) {
+        setPost({
+          ...updatedPost,
+          likedBy: Object.keys(updatedPost.likedBy ?? {}),
+        });
+      } else {
+        setPost(null);
+      }
     });
   }, [id]);
 
@@ -34,6 +40,15 @@ export default function SinglePost() {
         setIsEditing(false);
       })
       .catch(e => alert(e.message));
+  }
+  const handleDelete = async () => {
+    try {
+      await deletePost(id);
+      alert('Post deleted successfully!')
+      navigate('/')
+    } catch (error) {
+      alert(`${error.message} trying to delete the post`)
+    }
   }
 
   return (
@@ -52,6 +67,7 @@ export default function SinglePost() {
       ) : (
         <button onClick={handleEdit}>Edit</button>
       )}
+      <button onClick={handleDelete}>Delete</button>
       <h2>Comments:</h2>
       <CreateComment postId={id} />
     </div>

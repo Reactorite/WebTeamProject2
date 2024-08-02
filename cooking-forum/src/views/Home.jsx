@@ -30,6 +30,7 @@ export default function Home() {
         ? sortedPosts.slice(0, 10).map(p => (
           <RecentPosts
             key={p.id}
+            id={p.id}
             title={p.title}
             content={p.content}
             createdOn={p.createdOn}
