@@ -15,6 +15,9 @@ import { auth } from './config/firebase-config';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getUserData } from './services/users.service';
 import Footer from './components/Footer'
+import User from './views/User'
+import UserLikes from './views/UserLikes'
+import UserPosts from './views/UserPosts'
 
 function App() {
   const [appState, setAppState] = useState({
@@ -49,6 +52,9 @@ function App() {
           <Route path='/posts-create' element={user && <Authenticated><CreatePost /></Authenticated>} />
           <Route path='/login' element={!user && <Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/user' element={user && <Authenticated><User /></Authenticated>} />
+          <Route path='/user/liked-posts' element={user && <Authenticated><UserLikes /></Authenticated>} />
+          <Route path='/user/my-posts' element={user && <Authenticated><UserPosts author={appState.userData?.handle} /></Authenticated>} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
