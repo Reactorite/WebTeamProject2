@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Home from './views/Home'
 import Posts from './views/Posts'
@@ -22,10 +22,11 @@ function App() {
     user: null,
     userData: null,
   });
+  // eslint-disable-next-line no-unused-vars
   const [user, loading, error] = useAuthState(auth);
 
   if (appState.user !== user) {
-    setAppState({...appState, user });
+    setAppState({ ...appState, user });
   }
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function App() {
     getUserData(appState.user.uid)
       .then(data => {
         const userData = data[Object.keys(data)[0]];
-        setAppState({...appState, userData});
+        setAppState({ ...appState, userData });
       });
   }, [user]);
 
@@ -44,7 +45,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/posts' element={<Authenticated><Posts /></Authenticated>} /> 
+          <Route path='/posts' element={<Authenticated><Posts /></Authenticated>} />
           <Route path='/posts/:id' element={<Authenticated><SinglePost /></Authenticated>} />
           <Route path='/posts-create' element={<Authenticated><CreatePost /></Authenticated>} />
           <Route path='/effects' element={<Authenticated><Effects /></Authenticated>} />
