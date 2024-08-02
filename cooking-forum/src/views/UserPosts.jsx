@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllPosts } from '../services/posts.service';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function UserPosts({ author }) {
   const [posts, setPosts] = useState([]);
@@ -29,3 +30,5 @@ export default function UserPosts({ author }) {
     </div>
   );
 }
+
+UserPosts.propTypes = { author: PropTypes.string.isRequired };
