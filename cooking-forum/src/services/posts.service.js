@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey } from 'firebase/database';
+import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey, remove } from 'firebase/database';
 import { db } from '../config/firebase-config'
 
 export const createPost = async (author, title, content) => {
