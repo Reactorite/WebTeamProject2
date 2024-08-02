@@ -77,6 +77,10 @@ export const createComment = async (author, content, postId) => {
   // });
 };
 
+export const editPost = async (id, title, content) => {
+  await update(ref(db, `posts/${id}`), { title, content });
+};
+
 // export const createTweet = async (title, content) => {
 //   const response = await fetch('http://127.0.0.1:3000/tweets', {
 //     method: 'POST',
