@@ -10,6 +10,7 @@ export default function SinglePost() {
   const [post, setPost] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
+  const [editTitle, setEditTitle] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -34,9 +35,9 @@ export default function SinglePost() {
 
   function handleEditSubmit(e) {
     e.preventDefault();
-    update(ref(db, `posts/${id}`), { content: editContent })
+    update(ref(db, `posts/${id}`), { title: editTitle, content: editContent })
       .then(() => {
-        setPost(prevPost => ({ ...prevPost, content: editContent }));
+        setPost(prevPost => ({ ...prevPost, title: editTitle, content: editContent }));
         setIsEditing(false);
       })
       .catch(e => alert(e.message));
@@ -57,6 +58,12 @@ export default function SinglePost() {
       {post && <Post post={post} />}
       {isEditing ? (
         <form onSubmit={handleEditSubmit}>
+          <label htmlFor="editTitle">Title:</label>
+          <textarea
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+          />
+          <label htmlFor="editContent">Content:</label>
           <textarea
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
