@@ -45,11 +45,11 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/posts' element={<Authenticated><Posts /></Authenticated>} />
-          <Route path='/posts/:id' element={<Authenticated><SinglePost /></Authenticated>} />
-          <Route path='/posts-create' element={<Authenticated><CreatePost /></Authenticated>} />
-          <Route path='/effects' element={<Authenticated><Effects /></Authenticated>} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/posts' element={user && <Authenticated><Posts /></Authenticated>} />
+          <Route path='/posts/:id' element={user && <Authenticated><SinglePost /></Authenticated>} />
+          <Route path='/posts-create' element={user && <Authenticated><CreatePost /></Authenticated>} />
+          <Route path='/effects' element={user && <Authenticated><Effects /></Authenticated>} />
+          <Route path='/login' element={!user && <Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
