@@ -24,11 +24,10 @@ export default function Header() {
           <>
             <NavLink to="/posts">All posts</NavLink>
             <NavLink to="/posts-create">Create posts</NavLink>
-            <NavLink to="/effects">Test effects</NavLink>
             <button onClick={() => setShowSearch(prev => !prev)}>
-          Search
-        </button>
-      {showSearch && <Search />}
+              Search
+            </button>
+            {showSearch && <Search />}
           </>
         )}
         {!user && <NavLink to="/login">Login</NavLink>}

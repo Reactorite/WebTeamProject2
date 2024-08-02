@@ -5,7 +5,6 @@ import Posts from './views/Posts'
 import CreatePost from './views/CreatePost'
 import SinglePost from './views/SinglePost'
 import Header from './components/Header';
-import Effects from './views/Effects';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NotFound from './views/NotFound';
 import { AppContext } from './state/app.context';
@@ -48,7 +47,6 @@ function App() {
           <Route path='/posts' element={user && <Authenticated><Posts /></Authenticated>} />
           <Route path='/posts/:id' element={user && <Authenticated><SinglePost /></Authenticated>} />
           <Route path='/posts-create' element={user && <Authenticated><CreatePost /></Authenticated>} />
-          <Route path='/effects' element={user && <Authenticated><Effects /></Authenticated>} />
           <Route path='/login' element={!user && <Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />

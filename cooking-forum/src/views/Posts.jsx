@@ -8,10 +8,8 @@ export default function Posts() {
   // const [searchParams, setSearchParams] = useSearchParams();
   // const search = searchParams.get('search') ?? '';
 
-  console.log(posts);
-
   useEffect(() => {
-    getAllPosts() 
+    getAllPosts()
       .then(posts => setPosts(posts))
       .catch(error => alert(error.message));
     // (async() => {
@@ -45,8 +43,8 @@ export default function Posts() {
       {/* <label htmlFor="search"></label>
       <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/><br/> */}
       {posts.length > 0
-      ? posts.map(p => <div key={p.id}> <Link to={`/posts/${p.id}`}>{p.title}</Link></div>)
-      : 'No Posts'
+        ? posts.map(p => <div key={p.id}> <Link to={`/posts/${p.id}`}>{p.title}</Link></div>)
+        : 'No Posts'
       }
     </div>
   )
