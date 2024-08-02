@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../state/app.context";
 import { NavLink } from "react-router-dom";
-import UserPosts from "./UserPosts";
 
 export default function User() {
   const { userData } = useContext(AppContext);
