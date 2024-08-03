@@ -75,6 +75,22 @@ export const editPost = async (id, title, content) => {
 };
 
 export const deletePost = async (postId) => {
+  // Fetch all users
+  const usersSnapshot = await get(ref(db, 'users'));
+  const users = usersSnapshot.val();
+
+  // Prepare updates to remove the post from each user's likePost
+  const updates = {};
+  for (const userId in users) {
+    if (users[userId].likePost && users[userId].likePost[postId]) {
+      updates[`users/${userId}/likePost/${postId}`] = null;
+    }
+  }
+
+  // Apply the updates
+  await update(ref(db), updates);
+
+  // Remove the post from the database
   return remove(ref(db, `posts/${postId}`));
 };
 
