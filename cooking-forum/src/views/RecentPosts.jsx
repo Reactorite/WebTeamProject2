@@ -8,8 +8,8 @@ const RecentPosts = ({ id, title, content, createdOn, likeCount }) => {
                 <Link to={`/posts/${id}`}>{title}</Link>
             </h3>
             <p>{content}</p>
-            <p>{createdOn}</p>
-            <p>Likes: {likeCount}</p>
+            <p>Posted: {new Date(createdOn).toLocaleString()}</p>
+            <p>Likes: {likeCount}</p><br />
         </div>
     );
 }

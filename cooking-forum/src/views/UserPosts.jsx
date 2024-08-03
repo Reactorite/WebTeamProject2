@@ -2,10 +2,16 @@ import { useEffect, useState } from 'react';
 import { deletePost, getAllPosts } from '../services/posts.service';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ref, update } from 'firebase/database';
+import { db } from '../config/firebase-config';
 
 export default function UserPosts({ author }) {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState('');
+  const [editTitle, setEditTitle] = useState('');
+  const [currentPostId, setCurrentPostId] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -29,20 +35,56 @@ export default function UserPosts({ author }) {
     }
   };
 
+  function handleEdit(post) {
+    setIsEditing(true);
+    setEditTitle(post.title);
+    setEditContent(post.content);
+    setCurrentPostId(post.id);
+  }
+
+  async function handleEditSubmit(e) {
+    e.preventDefault();
+    try {
+      await update(ref(db, `posts/${currentPostId}`), { title: editTitle, content: editContent });
+      setPosts(prevPosts => prevPosts.map(post =>
+        post.id === currentPostId ? { ...post, title: editTitle, content: editContent } : post
+      ));
+      setIsEditing(false);
+      alert('Post updated successfully!');
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   return (
     <div>
       <h2>{author}&apos;s Posts</h2>
-      {posts.map(post => (
+      {!isEditing && posts.map(post => (
         <div key={post.id}>
           <h3>{post.title}</h3>
           <p>{post.content}</p><br /><br />
           <button onClick={() => handleDelete(post.id)}>Delete</button>
-          {/* <button onClick={handleEdit}>Edit</button> */}
+          <button onClick={() => handleEdit(post)}>Edit</button>
         </div>
       ))}
-      <div>
-        <button onClick={() => navigate(-1)}>Back</button>
-      </div>
+      {!isEditing && <button onClick={() => navigate(-1)}>Back</button>}
+      {isEditing && (
+        <form onSubmit={handleEditSubmit}>
+          <input
+            type="text"
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+            placeholder="Title"
+          />
+          <textarea
+            value={editContent}
+            onChange={(e) => setEditContent(e.target.value)}
+            placeholder="Content"
+          />
+          <button type="submit">Save</button>
+          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+        </form>
+      )}
     </div>
   );
 }
