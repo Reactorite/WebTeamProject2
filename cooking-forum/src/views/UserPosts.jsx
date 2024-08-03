@@ -67,7 +67,7 @@ export default function UserPosts({ author }) {
           <button onClick={() => handleEdit(post)}>Edit</button>
         </div>
       ))}
-      <button onClick={() => navigate(-1)}>Back</button>
+      {!isEditing && <button onClick={() => navigate(-1)}>Back</button>}
       {isEditing && (
         <form onSubmit={handleEditSubmit}>
           <input
