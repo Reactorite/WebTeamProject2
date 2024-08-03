@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey, remove } from 'firebase/database';
 import { db } from '../config/firebase-config'
+import { deleteAllComments } from './comments.service.js';
 
 export const createPost = async (author, title, content) => {
-  const post = { author, title, content, createdOn: new Date().toString() };
+  const post = { author, title, content, createdOn: new Date().toString(), comments: []};
   const result = await push(ref(db, 'posts'), post);
   const id = result.key;
   await update(ref(db), {
@@ -81,6 +82,7 @@ export const deletePost = async (postId) => {
   // Apply the updates
   await update(ref(db), updates);
 
+  deleteAllComments(postId);
   // Remove the post from the database
   return remove(ref(db, `posts/${postId}`));
 };
