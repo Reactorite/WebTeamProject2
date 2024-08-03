@@ -61,15 +61,6 @@ export const dislikePost = (handle, postId) => {
   return update(ref(db), updateObject);
 };
 
-export const createComment = async (author, content, postId) => {
-  const comment = { author, content, createdOn: new Date().toString() };
-  const result = await push(ref(db, `posts/${postId}/comments`), comment);
-  // const id = result.key;
-  // await update(ref(db), {
-  //   [`posts/${postId}/comments/${id}`]: comment,
-  // });
-};
-
 export const editPost = async (id, title, content) => {
   await update(ref(db, `posts/${id}`), { title, content });
 };
@@ -77,11 +68,6 @@ export const editPost = async (id, title, content) => {
 export const deletePost = async (postId) => {
   return remove(ref(db, `posts/${postId}`));
 };
-
-export const deleteComment = async (postId, commentId) => {
-  return remove(ref(db, `posts/${postId}/comments/${commentId}`));
-};
-
 
 // export const createTweet = async (title, content) => {
 //   const response = await fetch('http://127.0.0.1:3000/tweets', {

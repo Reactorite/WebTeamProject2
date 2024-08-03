@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { createComment } from "../services/posts.service";
+import { createComment } from "../services/comments.service";
 import { AppContext } from '../state/app.context'
 
 export default function CreateComment({ postId }) {

@@ -7,3 +7,25 @@ import { db } from '../config/firebase-config'
 export const updateComment = async (postId, commentId, content) => {
   await update(ref(db, `comments/${postId}/${commentId}`), { content });
 }
+
+export const createComment = async (author, content, postId) => {
+  const comment = { author, content, createdOn: new Date().toString(), postId: postId };
+  const result = await push(ref(db, `comments`), comment);
+  // const id = result.key;
+  // await update(ref(db), {
+  //   [`posts/${postId}/comments/${id}`]: comment,
+  // });
+};
+
+export const deleteComment = async (commentId) => {
+  const comments = await get(ref(db, `comments`));
+ 
+  return remove(ref(db, `comments/${commentId}`));
+};
+
+export const getAllComments = async (postId) => {
+  const comments = await get(ref(db, `comments`));
+  if (!comments.exists()) return [];
+
+  return Object.values(comments.val()).filter(c => c.postId === postId);
+};

@@ -6,6 +6,7 @@ import CreateComment from './CreateComment';
 import { useNavigate, useParams } from "react-router-dom"
 import { deletePost } from "../services/posts.service.js";
 import { AppContext } from '../state/app.context.js';
+import Comments from './Comments.jsx';
 
 
 export default function SinglePost() {
@@ -82,8 +83,8 @@ export default function SinglePost() {
           <button onClick={handleDelete}>Delete</button>
         </div>
       )}
-      <h2>Comments:</h2>
       <CreateComment postId={id} />
+      <Comments postId={id} />
     </div>
   );
 }
