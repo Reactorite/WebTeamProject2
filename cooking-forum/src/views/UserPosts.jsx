@@ -83,7 +83,6 @@ export default function UserPosts({ author }) {
           />
           <button type="submit">Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-          <button type="button" onClick={() => navigate(-1)}>Back</button>
         </form>
       )}
     </div>
