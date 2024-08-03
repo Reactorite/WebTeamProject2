@@ -9,14 +9,11 @@ export const updateComment = async (postId, commentId, content) => {
 }
 
 export const createComment = async (author, content, postId) => {
-  const comment = { author, content, createdOn: new Date().toString(), postId: postId};
-  const result = await push(ref(db, `comments`), comment);
+  const comment = { author, content, createdOn: new Date().toString(), postId };
+  const result = await push(ref(db, 'comments'), comment);
   const id = result.key;
-  return await set(ref(db, `comments/${id}/id`), id)
-  // return await push(ref(db, `posts/${postId}/comments`), id);
-  // await update(ref(db), {
-  //   [`posts/${postId}/comments/${id}`]: comment,
-  // });
+  await set(ref(db, `comments/${id}/id`), id);
+  return { ...comment, id };
 };
 
 export const deleteComment = async (commentId) => {

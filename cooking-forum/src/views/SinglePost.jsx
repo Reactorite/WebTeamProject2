@@ -83,7 +83,6 @@ export default function SinglePost() {
           <button onClick={handleDelete}>Delete</button>
         </div>
       )}
-      <CreateComment postId={id} />
       <Comments postId={id} />
     </div>
   );

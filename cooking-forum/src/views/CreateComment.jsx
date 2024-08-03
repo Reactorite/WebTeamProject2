@@ -1,8 +1,8 @@
-import { useContext, useState } from "react"
+import { useContext, useState } from "react";
 import { createComment } from "../services/comments.service";
-import { AppContext } from '../state/app.context'
+import { AppContext } from '../state/app.context';
 
-export default function CreateComment({ postId }) {
+export default function CreateComment({ postId, addComment }) {
   const [comment, setComment] = useState({
     author: '',
     content: '',
@@ -17,10 +17,10 @@ export default function CreateComment({ postId }) {
   };
 
   const handleCreateComment = async () => {
-
     try {
-      await createComment(userData.handle, comment.content, postId);
+      const newComment = await createComment(userData.handle, comment.content, postId);
       setComment({ author: '', content: '' });
+      addComment(newComment); 
     } catch (error) {
       alert(error.message);
     }
@@ -32,5 +32,5 @@ export default function CreateComment({ postId }) {
       <textarea value={comment.content} onChange={e => updateComment('content', e.target.value)} name="content" id="content" /><br/><br/>
       <button onClick={handleCreateComment}>Create</button>
     </div>
-  )
+  );
 }
