@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../state/app.context';
-import { getPostById } from '../services/posts.service';
+import { dislikePost, getPostById, likePost } from '../services/posts.service';
 import { useNavigate } from 'react-router-dom';
 export default function UserLikes() {
   const { userData } = useContext(AppContext);
@@ -32,6 +32,22 @@ export default function UserLikes() {
     }
   }, [userData]);
 
+  const toggleLike = async (post) => {
+    const isLiked = post.likedBy.includes(userData.handle);
+    setPosts(prevPosts => prevPosts.filter(p => p.id !== post.id));
+
+    try {
+      if (isLiked) {
+        await dislikePost(userData.handle, post.id);
+      } else {
+        await likePost(userData.handle, post.id);
+      }
+    } catch (error) {
+      alert(error.message);
+      setPosts(prevPosts => [...prevPosts, post]);
+    }
+  };
+
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -46,6 +62,7 @@ export default function UserLikes() {
         <div key={post.id}>
           <h2>{post.title}</h2>
           <p>{post.content}</p>
+          <button onClick={() => toggleLike(post)}>Dislike</button>
         </div>
       )) : <div>No liked posts.</div>}
       <button onClick={() => navigate(-1)}>Back</button>
