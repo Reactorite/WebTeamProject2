@@ -3,8 +3,8 @@ import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey, 
 import { db } from '../config/firebase-config'
 import { deleteAllComments } from './comments.service.js';
 
-export const createPost = async (author, title, content) => {
-  const post = { author, title, content, createdOn: new Date().toString(), comments: []};
+export const createPost = async (author, title, content, commentsCounter) => {
+  const post = { author, title, content, createdOn: new Date().toString(), comments: [], commentsCounter };
   const result = await push(ref(db, 'posts'), post);
   const id = result.key;
   await update(ref(db), {

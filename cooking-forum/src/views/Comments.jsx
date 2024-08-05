@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import { getAllComments, deleteComment } from "../services/comments.service.js";
 import CreateComment from "./CreateComment";
 import { AppContext } from '../state/app.context.js';
+import { ref, update } from "firebase/database";
+import { db } from "../config/firebase-config.js";
 
 export default function Comments({ postId }) {
   const { userData } = useContext(AppContext);
@@ -21,6 +23,7 @@ export default function Comments({ postId }) {
     try {
       await deleteComment(commentId);
       setComments(comments.filter(comment => comment.id !== commentId));
+      update(ref(db, `posts/${postId}/commentsCounter`), counter => counter - 1);
       alert('Comment deleted successfully!');
     } catch (error) {
       alert(`${error.message} trying to delete the comment`);
