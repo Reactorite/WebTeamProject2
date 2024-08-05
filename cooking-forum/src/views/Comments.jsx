@@ -21,11 +21,20 @@ export default function Comments({ postId }) {
     setComments([...comments, newComment]);
   };
 
+  const decrementCounter = async () => {
+    const postRef = ref(db, `posts/${postId}`);
+    const postSnapshot = await get(postRef);
+    const post = postSnapshot.val();
+    const newCounter = (post.commentsCounter > 1) ? post.commentsCounter - 1 : 0;    
+    return { commentsCounter: newCounter };
+  };
+
   const handleDelete = async (commentId) => {
     try {
       await deleteComment(commentId);
       setComments(comments.filter(comment => comment.id !== commentId));
-      update(ref(db, `posts/${postId}/commentsCounter`), counter => counter - 1);
+      const counterUpdate = await decrementCounter();
+      await update(ref(db, `posts/${postId}`), counterUpdate);
       alert('Comment deleted successfully!');
     } catch (error) {
       alert(`${error.message} trying to delete the comment`);
