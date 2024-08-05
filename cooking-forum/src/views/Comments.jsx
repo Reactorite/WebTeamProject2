@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getAllComments, deleteComment } from "../services/comments.service.js";
 import CreateComment from "./CreateComment";
+import { AppContext } from '../state/app.context.js';
 
 export default function Comments({ postId }) {
+  const { userData } = useContext(AppContext);
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -29,15 +31,20 @@ export default function Comments({ postId }) {
     <div>
       <h1>Comments:</h1>
       <CreateComment postId={postId} addComment={addComment} />
-      {comments.length > 0 ? comments.map(c =>
-        <p key={c.id}>
-          {c.author} <br />
-          {c.createdOn} <br />
-          {c.content} <br />
-          <button onClick={() => handleDelete(c.id)}>Delete Comment</button>
-        </p>)
-        : 'No Comments yet.'
-      }
+      {comments.length > 0 ? comments.map(c => {
+        const isAuthor = userData && userData.handle === c.author;
+
+        return (
+          <p key={c.id}>
+            {c.author} <br />
+            {new Date(c.createdOn).toLocaleString()} <br />
+            {c.content} <br />
+            {isAuthor && (
+              <button onClick={() => handleDelete(c.id)}>Delete Comment</button>
+            )}
+          </p>
+        );
+      }) : 'No Comments yet.'}
     </div>
   );
 }
