@@ -70,17 +70,19 @@ export default function UserPosts({ author }) {
       {!isEditing && <button onClick={() => navigate(-1)}>Back</button>}
       {isEditing && (
         <form onSubmit={handleEditSubmit}>
+          <label htmlFor="title">Title:</label>
           <input
             type="text"
             value={editTitle}
             onChange={(e) => setEditTitle(e.target.value)}
             placeholder="Title"
-          />
+          /><br />
+          <label htmlFor="content">Content:</label>
           <textarea
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
             placeholder="Content"
-          />
+          /><br />
           <button type="submit">Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
