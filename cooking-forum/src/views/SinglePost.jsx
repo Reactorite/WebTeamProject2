@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { ref, onValue, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import Post from '../components/Post';
-import CreateComment from './CreateComment';
 import { useNavigate, useParams } from "react-router-dom"
 import { deletePost } from "../services/posts.service.js";
 import { AppContext } from '../state/app.context.js';
@@ -34,6 +33,7 @@ export default function SinglePost() {
 
   function handleEdit() {
     setIsEditing(true);
+    setEditTitle(post.title)
     setEditContent(post.content);
   }
 
