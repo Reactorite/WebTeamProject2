@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { getAllComments, deleteComment } from "../services/comments.service.js";
+import { getAllComments, deleteComment, likeComment, dislikeComment } from "../services/comments.service.js";
 import CreateComment from "./CreateComment";
 import { AppContext } from '../state/app.context.js';
 import { update, ref, get } from "firebase/database";
@@ -8,7 +8,6 @@ import { db } from "../config/firebase-config.js";
 export default function Comments({ postId }) {
   const { userData } = useContext(AppContext);
   const [comments, setComments] = useState([]);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
 
@@ -35,18 +34,42 @@ export default function Comments({ postId }) {
 
   function handleEdit(id) {
     setIsEditing(true);
-    const comment = get(ref(db, `comments/${id}`))
+    const comment = get(ref(db, `comments/${id}`));
     setEditContent(comment.content);
   }
 
   function handleEditSubmit(id) {
     update(ref(db, `comments/${id}`), { content: editContent })
       .then(() => {
-        setComments(prevComment => ({ ...prevComment, content: editContent }));
+        setComments(prevComments => prevComments.map(comment => comment.id === id ? { ...comment, content: editContent } : comment));
         setIsEditing(false);
       })
       .catch(e => alert(e.message));
   }
+
+  const toggleLike = async (commentId) => {
+    const comment = comments.find(c => c.id === commentId);
+    const isLiked = comment.likedBy?.includes(userData.handle);
+    try {
+      if (isLiked) {
+        await dislikeComment(userData.handle, commentId);
+      } else {
+        await likeComment(userData.handle, commentId);
+      }
+      const updatedComments = comments.map(c => {
+        if (c.id === commentId) {
+          const updatedLikedBy = isLiked
+            ? c.likedBy.filter(id => id !== userData.handle)
+            : [...(c.likedBy || []), userData.handle];
+          return { ...c, likedBy: updatedLikedBy };
+        }
+        return c;
+      });
+      setComments(updatedComments);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div>
@@ -60,7 +83,10 @@ export default function Comments({ postId }) {
             {c.author} <br />
             {new Date(c.createdOn).toLocaleString()} <br />
             {c.content} <br />
-            {isEditing ? (
+            <button onClick={() => toggleLike(c.id)}>
+              {c.likedBy?.includes(userData?.handle) ? 'Dislike' : 'Like'}
+            </button>
+            {isEditing && c.id === editContent.id ? (
               <form onSubmit={() => handleEditSubmit(c.id)}>
                 <label htmlFor="editContent">Content:</label>
                 <textarea

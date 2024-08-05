@@ -33,3 +33,23 @@ export const getAllComments = async (postId) => {
 
   return Object.values(comments.val()).filter(c => c.postId === postId);
 };
+
+export const likeComment = async (userId, commentId) => {
+  const commentRef = ref(db, `comments/${commentId}`);
+  const commentSnapshot = await get(commentRef);
+  if (commentSnapshot.exists()) {
+    const commentData = commentSnapshot.val();
+    const updatedLikedBy = commentData.likedBy ? [...commentData.likedBy, userId] : [userId];
+    await update(commentRef, { likedBy: updatedLikedBy });
+  }
+};
+
+export const dislikeComment = async (userId, commentId) => {
+  const commentRef = ref(db, `comments/${commentId}`);
+  const commentSnapshot = await get(commentRef);
+  if (commentSnapshot.exists()) {
+    const commentData = commentSnapshot.val();
+    const updatedLikedBy = commentData.likedBy.filter(id => id !== userId);
+    await update(commentRef, { likedBy: updatedLikedBy });
+  }
+};
