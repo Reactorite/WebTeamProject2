@@ -37,13 +37,19 @@ export default function Login() {
     }
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      login();
+    }
+  };
+
   return (
     <div>
       <h1>Login</h1>
       <label htmlFor="email">Email: </label>
-      <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" /><br /><br />
+      <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" onKeyDown={handleKeyDown}/><br /><br />
       <label htmlFor="password">Password: </label>
-      <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br />
+      <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" onKeyDown={handleKeyDown}/><br />
       <button onClick={login}>Login</button>
     </div>
   )
