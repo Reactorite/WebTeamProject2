@@ -73,12 +73,14 @@ export default function UserPosts({ author }) {
           <label htmlFor="title">Title:</label>
           <input
             type="text"
+            id="title"
             value={editTitle}
             onChange={(e) => setEditTitle(e.target.value)}
             placeholder="Title"
           /><br />
           <label htmlFor="content">Content:</label>
           <textarea
+            id="content"
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
             placeholder="Content"
