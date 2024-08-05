@@ -46,6 +46,7 @@ export default function SinglePost() {
       })
       .catch(e => alert(e.message));
   }
+  
   const handleDelete = async () => {
     try {
       await deletePost(id);
