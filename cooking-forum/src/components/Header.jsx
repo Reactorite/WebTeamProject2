@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../state/app.context";
 import { logoutUser } from "../services/auth.service";
 import Search from "../views/Search";
 
 export default function Header() {
-  const { user, userData, setAppState } = useContext(AppContext);
+  const { user, userData ,setAppState } = useContext(AppContext);
   const navigate = useNavigate();
   const [showSearch, setShowSearch] = useState(false);
 
@@ -14,6 +14,10 @@ export default function Header() {
     setAppState({ user: null, userData: null });
     navigate('/login');
   };
+
+  useEffect(() => {
+
+  }, [user, userData])
 
   return (
     <header>
@@ -33,7 +37,7 @@ export default function Header() {
         {!user && <NavLink to="/login">Login</NavLink>}
         {!user && <NavLink to="/register">Register</NavLink>}
         {user && <button onClick={logout}>Logout</button>}
-        {userData && <NavLink to="/user">User</NavLink>}
+        {user && userData && <NavLink to="/user">User</NavLink>}
       </nav>
     </header>
   );

@@ -3,7 +3,7 @@ import { registerUser } from "../services/auth.service";
 import { AppContext } from "../state/app.context";
 import { useNavigate } from "react-router-dom";
 import { createUserHandle, getUserByHandle } from "../services/users.service";
-import { MIN_FIRST_NAME_LENGTH, MIN_LAST_NAME_LENGTH } from "../constants/constants";
+import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "../constants/constants";
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -28,12 +28,12 @@ export default function Register() {
       return alert('No credentials provided!');
     }
 
-    if (user.firstName.length < MIN_FIRST_NAME_LENGTH) {
-      return alert(`First name must be at least ${MIN_FIRST_NAME_LENGTH} characters long`);
+    if (user.firstName.length < MIN_NAME_LENGTH && user.firstName.length > MAX_NAME_LENGTH) {
+      return alert(`First name must be at least ${MIN_NAME_LENGTH} characters long and max ${MAX_NAME_LENGTH}`);
     }
 
-    if (user.lastName.length < MIN_LAST_NAME_LENGTH) {
-      return alert(`Last name must be at least ${MIN_LAST_NAME_LENGTH} characters long`);
+    if (user.lastName.length < MIN_NAME_LENGTH && user.lastName.length > MAX_NAME_LENGTH) {
+      return alert(`Last name must be at least ${MIN_NAME_LENGTH} characters long and max ${MAX_NAME_LENGTH}`);
     }
 
     try {

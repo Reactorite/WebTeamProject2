@@ -3,10 +3,12 @@ import { AppContext } from "../state/app.context";
 import { NavLink } from "react-router-dom";
 import { onValue, ref } from "firebase/database";
 import { db } from "../config/firebase-config";
+import { getAllPosts } from "../services/posts.service";
 
 export default function User() {
   const { userData } = useContext(AppContext);
   const [likedPosts, setLikedPosts] = useState(0);
+  const [userPosts, setPosts] = useState([])
 
   useEffect(() => {
     if (userData && userData.handle) {
@@ -22,6 +24,16 @@ export default function User() {
     }
   }, [userData]);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const allPosts = await getAllPosts();
+      const userPosts = allPosts.filter(post => post.author === userData.handle);
+      setPosts(userPosts);
+    };
+
+    fetchPosts();
+  }, []);
+
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -32,7 +44,8 @@ export default function User() {
   return (
     <div>
       <h1>{handle}</h1>
-      <NavLink to="/user/my-posts">My Posts</NavLink><br />
+      <p>Rank: </p>
+      <NavLink to="/user/my-posts">My Posts: {userPosts.length}</NavLink><br />
       <NavLink to="/user/liked-posts">Liked Posts: {likedPosts}</NavLink>
       <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p>
     </div>

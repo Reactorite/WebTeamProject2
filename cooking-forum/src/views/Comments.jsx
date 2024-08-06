@@ -9,7 +9,7 @@ export default function Comments({ postId }) {
   const { userData } = useContext(AppContext);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [editContent, setEditContent] = useState('');
+  const [editContent, setEditContent] = useState({ id: '', content: '' });
 
   useEffect(() => {
     getAllComments(postId)
@@ -41,20 +41,30 @@ export default function Comments({ postId }) {
     }
   };
 
-  function handleEdit(id) {
-    setIsEditing(true);
-    const comment = get(ref(db, `comments/${id}`));
-    setEditContent(comment.content);
-  }
+  const handleEdit = async (id) => {
+    try {
+      const commentSnapshot = await get(ref(db, `comments/${id}`));
+      const comment = commentSnapshot.val();
+      setEditContent({ id, content: comment.content });
+      setIsEditing(true);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-  function handleEditSubmit(id) {
-    update(ref(db, `comments/${id}`), { content: editContent })
-      .then(() => {
-        setComments(prevComments => prevComments.map(comment => comment.id === id ? { ...comment, content: editContent } : comment));
-        setIsEditing(false);
-      })
-      .catch(e => alert(e.message));
-  }
+  const handleEditSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await update(ref(db, `comments/${editContent.id}`), { content: editContent.content });
+      setComments(prevComments => prevComments.map(comment => 
+        comment.id === editContent.id ? { ...comment, content: editContent.content } : comment
+      ));
+      setIsEditing(false);
+      setEditContent({ id: '', content: '' });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const toggleLike = async (commentId) => {
     const comment = comments.find(c => c.id === commentId);
@@ -88,30 +98,32 @@ export default function Comments({ postId }) {
         const isAuthor = userData && userData.handle === c.author;
 
         return (
-          <p key={c.id}>
-            {c.author} <br />
-            {new Date(c.createdOn).toLocaleString()} <br />
-            {c.content} <br />
-            <button onClick={() => toggleLike(c.id)}>
-              {c.likedBy?.includes(userData?.handle) ? 'Dislike' : 'Like'}
-            </button>
-            {isEditing && c.id === editContent.id ? (
-              <form onSubmit={() => handleEditSubmit(c.id)}>
-                <label htmlFor="editContent">Content:</label>
-                <textarea
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                />
-                <button type="submit">Save</button>
-                <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-              </form>
-            ) : isAuthor && (
-              <div>
-                <button onClick={() => handleDelete(c.id)}>Delete Comment</button>
-                <button onClick={() => handleEdit(c.id)}>Edit Comment</button>
-              </div>
-            )}
-          </p>
+          <div key={c.id}>
+            <div>
+              {c.author} <br />
+              {new Date(c.createdOn).toLocaleString()} <br />
+              {c.content} <br />
+              <button onClick={() => toggleLike(c.id)}>
+                {c.likedBy?.includes(userData?.handle) ? 'Dislike' : 'Like'}
+              </button>
+              {isEditing && c.id === editContent.id ? (
+                <form onSubmit={handleEditSubmit}>
+                  <label htmlFor="editContent">Content:</label>
+                  <textarea
+                    value={editContent.content}
+                    onChange={(e) => setEditContent({ ...editContent, content: e.target.value })}
+                  />
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={() => { setIsEditing(false); setEditContent({ id: '', content: '' }); }}>Cancel</button>
+                </form>
+              ) : isAuthor && (
+                <div>
+                  <button onClick={() => handleDelete(c.id)}>Delete Comment</button>
+                  <button onClick={() => handleEdit(c.id)}>Edit Comment</button>
+                </div>
+              )}
+            </div>
+          </div>
         );
       }) : 'No Comments yet.'}
     </div>
