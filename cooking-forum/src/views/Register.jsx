@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useState } from "react";
 import { registerUser } from "../services/auth.service";
 import { AppContext } from "../state/app.context";
 import { useNavigate } from "react-router-dom";
@@ -38,11 +38,11 @@ export default function Register() {
       return alert('Passwords do not match!');
     }
 
-    if (user.firstName.length < MIN_NAME_LENGTH && user.firstName.length > MAX_NAME_LENGTH) {
+    if (user.firstName.length < MIN_NAME_LENGTH || user.firstName.length > MAX_NAME_LENGTH) {
       return alert(`First name must be at least ${MIN_NAME_LENGTH} characters long and max ${MAX_NAME_LENGTH}`);
     }
 
-    if (user.lastName.length < MIN_NAME_LENGTH && user.lastName.length > MAX_NAME_LENGTH) {
+    if (user.lastName.length < MIN_NAME_LENGTH || user.lastName.length > MAX_NAME_LENGTH) {
       return alert(`Last name must be at least ${MIN_NAME_LENGTH} characters long and max ${MAX_NAME_LENGTH}`);
     }
 
@@ -53,7 +53,7 @@ export default function Register() {
       }
       const credential = await registerUser(user.email, user.password);
       await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email);
-      setAppState({ user: credential.user, userData: null });
+      setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString() }}));
       navigate('/');
     } catch (error) {
       alert(error.message);
@@ -74,7 +74,7 @@ export default function Register() {
       <label htmlFor="password">Password: </label>
       <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br /><br />
       <label htmlFor="repeatPassword">Repeat Password: </label>
-      <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" id="repeatPassword" />
+      <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" />
       {user.repeatPassword && (
         <span style={{ color: passwordsMatch ? 'green' : 'red' }}>
           {passwordsMatch ? '✅ Passwords match!' : '❌ Passwords do not match!'}

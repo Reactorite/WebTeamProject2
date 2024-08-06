@@ -15,10 +15,6 @@ export default function Header() {
     navigate('/login');
   };
 
-  useEffect(() => {
-
-  }, [user, userData])
-
   return (
     <header>
       <h1>Gourmet Galaxy</h1>

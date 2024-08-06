@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Home from './views/Home'
-import Posts from './views/Posts'
-import CreatePost from './views/CreatePost'
-import SinglePost from './views/SinglePost'
+import { useEffect, useState } from 'react';
+import './App.css';
+import Home from './views/Home';
+import Posts from './views/Posts';
+import CreatePost from './views/CreatePost';
+import SinglePost from './views/SinglePost';
 import Header from './components/Header';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NotFound from './views/NotFound';
@@ -14,30 +14,31 @@ import Register from './views/Register';
 import { auth } from './config/firebase-config';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getUserData } from './services/users.service';
-import Footer from './components/Footer'
-import User from './views/User'
-import UserLikes from './views/UserLikes'
-import UserPosts from './views/UserPosts'
+import Footer from './components/Footer';
+import User from './views/User';
+import UserLikes from './views/UserLikes';
+import UserPosts from './views/UserPosts';
 
 function App() {
   const [appState, setAppState] = useState({
     user: null,
     userData: null,
   });
-  // eslint-disable-next-line no-unused-vars
   const [user, loading, error] = useAuthState(auth);
 
-  if (appState.user !== user) {
-    setAppState({ ...appState, user });
-  }
+  useEffect(() => {
+    if (appState.user !== user) {
+      setAppState({ ...appState, user });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;
 
-    getUserData(appState.user.uid)
+    getUserData(user.uid)
       .then(data => {
         const userData = data[Object.keys(data)[0]];
-        setAppState({ ...appState, userData });
+        setAppState(prev => ({ ...prev, userData }));
       });
   }, [user]);
 
@@ -51,16 +52,16 @@ function App() {
           <Route path='/posts/:id' element={user && <Authenticated><SinglePost /></Authenticated>} />
           <Route path='/posts-create' element={user && <Authenticated><CreatePost /></Authenticated>} />
           <Route path='/login' element={!user && <Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/user' element={user && <Authenticated><User /></Authenticated>} />
-          <Route path='/user/liked-posts' element={user && <Authenticated><UserLikes /></Authenticated>} />
-          <Route path='/user/my-posts' element={user && <Authenticated><UserPosts author={appState.userData?.handle} /></Authenticated>} />
+          <Route path='/register' element={!user && <Register />} />
+          <Route path='/user' element={user && appState.userData && <Authenticated><User /></Authenticated>} />
+          <Route path='/user/liked-posts' element={user && appState.userData && <Authenticated><UserLikes /></Authenticated>} />
+          <Route path='/user/my-posts' element={user && appState.userData && <Authenticated><UserPosts author={appState.userData?.handle} /></Authenticated>} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
       </AppContext.Provider>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
