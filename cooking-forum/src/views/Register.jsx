@@ -34,6 +34,10 @@ export default function Register() {
       return alert('No credentials provided!');
     }
 
+    if (!passwordsMatch) {
+      return alert('Passwords do not match!');
+    }
+
     if (user.firstName.length < MIN_NAME_LENGTH && user.firstName.length > MAX_NAME_LENGTH) {
       return alert(`First name must be at least ${MIN_NAME_LENGTH} characters long and max ${MAX_NAME_LENGTH}`);
     }
