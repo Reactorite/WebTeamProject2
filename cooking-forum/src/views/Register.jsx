@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { registerUser } from "../services/auth.service";
 import { AppContext } from "../state/app.context";
 import { useNavigate } from "react-router-dom";
-import { createUserHandle, getUserByHandle } from "../services/users.service";
+import { createUserHandle } from "../services/users.service";
 import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "../constants/constants";
 
 export default function Register() {
@@ -12,7 +12,9 @@ export default function Register() {
     firstName: '',
     lastName: '',
     password: '',
+    repeatPassword: '',
   });
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { setAppState } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -20,7 +22,11 @@ export default function Register() {
     setUser({
       ...user,
       [prop]: e.target.value,
-    })
+    });
+
+    if (prop === 'password' || prop === 'repeatPassword') {
+      setPasswordsMatch(user.password === e.target.value || user.repeatPassword === e.target.value);
+    }
   };
 
   const register = async () => {
@@ -37,8 +43,8 @@ export default function Register() {
     }
 
     try {
-      const userFromDB = await getUserByHandle(user.handle);
-      if (userFromDB) {
+      const userExists = false;
+      if (userExists) {
         return alert(`User {${user.handle}} already exists!`);
       }
       const credential = await registerUser(user.email, user.password);
@@ -62,7 +68,15 @@ export default function Register() {
       <label htmlFor="lastName">Last name: </label>
       <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
       <label htmlFor="password">Password: </label>
-      <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br />
+      <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br /><br />
+      <label htmlFor="repeatPassword">Repeat Password: </label>
+      <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" id="repeatPassword" />
+      {user.repeatPassword && (
+        <span style={{ color: passwordsMatch ? 'green' : 'red' }}>
+          {passwordsMatch ? '✅ Passwords match!' : '❌ Passwords do not match!'}
+        </span>
+      )}
+      <br />
       <button onClick={register}>Register</button>
     </>
   )
