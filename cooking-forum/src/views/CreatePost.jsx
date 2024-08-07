@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { createPost } from "../services/posts.service";
 import { AppContext } from '../state/app.context'
+import { MAX_CONTENT_LENGTH, MAX_TITLE_LENGTH, MIN_CONTENT_LENGTH, MIN_TITLE_LENGTH } from "../constants/constants";
 
 export default function CreatePost() {
   const [post, setPost] = useState({
@@ -18,11 +19,11 @@ export default function CreatePost() {
   };
 
   const handleCreatePost = async () => {
-    if (post.title.length < 3) {
-      return alert('Title too short!');
+    if (post.title.length < MIN_TITLE_LENGTH && post.title.length > MAX_TITLE_LENGTH) {
+      return alert(`Title length must be between ${MIN_TITLE_LENGTH} and ${MAX_TITLE_LENGTH} symbols!`);
     }
-    if (post.content.length < 3) {
-      return alert('Content too short!');
+    if (post.content.length < MIN_CONTENT_LENGTH && post.content.length > MAX_CONTENT_LENGTH) {
+      return alert(`Content length must be between ${MIN_TITLE_LENGTH} and ${MAX_TITLE_LENGTH} symbols!`);
     }
 
     try {

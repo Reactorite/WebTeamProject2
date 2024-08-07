@@ -124,7 +124,7 @@ export default function Comments({ postId }) {
             </div> <br />
           </div> 
         );
-      }) : 'No Comments yet.'}
+      }) : 'No Comments yet.'} <br />
       {!isBlocked ? <CreateComment postId={postId} addComment={addComment}/> : "You are banned and cant have any actions!"} <br />
     </div>
     

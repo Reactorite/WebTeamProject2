@@ -15,3 +15,12 @@ export const getUserData = async (uid) => {
   const snapshot = await get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
   return snapshot.val();
 };
+
+export const getAllUsers = async () => {
+  const snapshot = await get(ref(db, 'users'));
+  const users = [];
+  snapshot.forEach(childSnapshot => {
+    users.push(childSnapshot.val());
+  });
+  return users;
+};

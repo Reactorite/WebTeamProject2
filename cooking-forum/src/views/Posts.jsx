@@ -1,19 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { getAllPosts, likePostCount } from "../services/posts.service";
 import RecentPosts from "./RecentPosts";
 
-
 export default function Posts() {
   const [posts, setPosts] = useState([]);
-  // const navigate = useNavigate();
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const search = searchParams.get('search') ?? '';
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [filter, setFilter] = useState("");
+  const [sortOption, setSortOption] = useState("date");
 
-  // useEffect(() => {
-  //   getAllPosts()
-  //     .then(posts => setPosts(posts))
-  //     .catch(error => alert(error.message));
-  // }, []);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -31,39 +25,66 @@ export default function Posts() {
     fetchPosts();
   }, []);
 
-  // const setSearch = (value) => {
-  //   setSearchParams({
-  //     search: value,
-  //   });
-  // }
+  useEffect(() => {
+    let updatedPosts = [...posts];
 
-  // const handleUpdateTweet = async (tweet) => {
-  //   try {
-  //     const updatedTweet = await updateTweet(tweet);
-  //     setTweets(tweets.map(t => t.id === updatedTweet.id ? updatedTweet : t))
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // };
+    if (filter) {
+      updatedPosts = updatedPosts.filter(post =>
+        post.title.toLowerCase().includes(filter.toLowerCase()) ||
+        post.author.toLowerCase().includes(filter.toLowerCase())
+      );
+    }
+
+    if (sortOption === "date") {
+      updatedPosts.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
+    } else if (sortOption === "likes") {
+      updatedPosts.sort((a, b) => b.likeCount - a.likeCount);
+    }
+
+    setFilteredPosts(updatedPosts);
+  }, [posts, filter, sortOption]);
 
   return (
     <div>
       <h1>Posts:</h1>
-      {/* <label htmlFor="search"></label>
-      <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/><br/> */}
-      {posts.length > 0
-        ? posts.map(p => <RecentPosts
-          key={p.id}
-          id={p.id}
-          author={p.author}
-          title={p.title}
-          content={p.content}
-          createdOn={p.createdOn}
-          likeCount={p.likeCount}
-          commentsCounter={p.commentsCounter}
-        />)
-        : 'No Posts'
-      }
+      <div>
+        <label htmlFor="filter">Filter by author or title:</label>
+        <input
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          type="text"
+          name="filter"
+          id="filter"
+        />
+      </div>
+      <div>
+        <label htmlFor="sort">Sort by:</label>
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          name="sort"
+          id="sort"
+        >
+          <option value="date">Date</option>
+          <option value="likes">Likes</option>
+        </select>
+      </div>
+      <div>
+        {filteredPosts.length > 0
+          ? filteredPosts.map((p) => (
+              <RecentPosts
+                key={p.id}
+                id={p.id}
+                author={p.author}
+                title={p.title}
+                content={p.content}
+                createdOn={p.createdOn}
+                likeCount={p.likeCount}
+                commentsCounter={p.commentsCounter}
+              />
+            ))
+          : "No Posts"}
+      </div>
     </div>
-  )
+  );
 }
