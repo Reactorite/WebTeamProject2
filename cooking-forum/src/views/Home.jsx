@@ -41,7 +41,7 @@ export default function Home() {
   }, []);
 
   const sortedPosts = posts.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
-  const sortedComments = posts.sort((a, b) => b.commentsCounter - a.commentsCounter);
+  const sortedComments = mostCommented.sort((a, b) => b.commentsCounter - a.commentsCounter);
 
   return (
     <div>
