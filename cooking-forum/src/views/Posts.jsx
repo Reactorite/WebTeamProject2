@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { getAllPosts } from "../services/posts.service";
-import { Link } from "react-router-dom";
+import { getAllPosts, likePostCount } from "../services/posts.service";
+import RecentPosts from "./RecentPosts";
+
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -8,18 +9,26 @@ export default function Posts() {
   // const [searchParams, setSearchParams] = useSearchParams();
   // const search = searchParams.get('search') ?? '';
 
+  // useEffect(() => {
+  //   getAllPosts()
+  //     .then(posts => setPosts(posts))
+  //     .catch(error => alert(error.message));
+  // }, []);
   useEffect(() => {
-    getAllPosts()
-      .then(posts => setPosts(posts))
-      .catch(error => alert(error.message));
-    // (async() => {
-    //   try {
-    //     const tweets = await getAllTweets();
-    //     console.log(tweets);
-    //   } catch (error) {
-    //     alert(error.message);
-    //   }
-    // })();
+    const fetchPosts = async () => {
+      try {
+        const postsData = await getAllPosts();
+        const postsWithLikeCounts = await Promise.all(postsData.map(async (post) => {
+          const likeCount = await likePostCount(post.id);
+          return { ...post, likeCount };
+        }));
+        setPosts(postsWithLikeCounts);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   // const setSearch = (value) => {
@@ -43,7 +52,16 @@ export default function Posts() {
       {/* <label htmlFor="search"></label>
       <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/><br/> */}
       {posts.length > 0
-        ? posts.map(p => <div key={p.id}> <Link to={`/posts/${p.id}`}>{p.title}</Link></div>)
+        ? posts.map(p => <RecentPosts
+          key={p.id}
+          id={p.id}
+          author={p.author}
+          title={p.title}
+          content={p.content}
+          createdOn={p.createdOn}
+          likeCount={p.likeCount}
+          commentsCounter={p.commentsCounter}
+        />)
         : 'No Posts'
       }
     </div>

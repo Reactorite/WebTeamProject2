@@ -27,8 +27,11 @@ export default function Home() {
     const fetchMostCommented = async () => {
       try {
         const postsData = await getAllPosts();
-        const sortedPosts = postsData.sort((a, b) => b.commentsCounter - a.commentsCounter);
-        setMostCommented(sortedPosts);
+        const postsWithLikeCounts = await Promise.all(postsData.map(async (post) => {
+          const likeCount = await likePostCount(post.id);
+          return { ...post, likeCount };
+        }));
+        setMostCommented(postsWithLikeCounts);
       } catch (error) {
         alert(error.message);
       }
@@ -38,6 +41,7 @@ export default function Home() {
   }, []);
 
   const sortedPosts = posts.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
+  const sortedComments = posts.sort((a, b) => b.commentsCounter - a.commentsCounter);
 
   return (
     <div>
@@ -47,22 +51,26 @@ export default function Home() {
           <RecentPosts
             key={p.id}
             id={p.id}
+            author={p.author}
             title={p.title}
             content={p.content}
             createdOn={p.createdOn}
             likeCount={p.likeCount}
+            commentsCounter={p.commentsCounter}
           />
         ))
         : "Not enough posts to view"}
       <h2>Most commented posts</h2>
-      {mostCommented.length > 0
-        ? mostCommented.slice(0, 10).map(p => (
+      {sortedComments.length > 0
+        ? sortedComments.slice(0, 10).map(p => (
           <RecentPosts
             key={p.id}
             id={p.id}
+            author={p.author}
             title={p.title}
             content={p.content}
             createdOn={p.createdOn}
+            likeCount={p.likeCount}
             commentsCounter={p.commentsCounter}
           />
         )) : "Not enough posts to view"}
