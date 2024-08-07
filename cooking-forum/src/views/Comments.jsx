@@ -6,7 +6,7 @@ import { update, ref, get } from "firebase/database";
 import { db } from "../config/firebase-config.js";
 
 export default function Comments({ postId }) {
-  const { userData, isAdmin, isBlocked } = useContext(AppContext);
+  const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState({ id: '', content: '' });
@@ -115,7 +115,7 @@ export default function Comments({ postId }) {
                   <button type="submit">Save</button>
                   <button type="button" onClick={() => { setIsEditing(false); setEditContent({ id: '', content: '' }); }}>Cancel</button>
                 </form>
-              ) : ((isAuthor && !isBlocked) || isAdmin) && (
+              ) : ((isAuthor && !isBlocked) || isAdmin || isOwner) && (
                 <div>
                   <button onClick={() => handleDelete(c.id)}>Delete Comment</button>
                   <button onClick={() => handleEdit(c.id)}>Edit Comment</button>

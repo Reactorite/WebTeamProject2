@@ -15,7 +15,7 @@ export default function SinglePost() {
   const [editTitle, setEditTitle] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
-  const { userData, isAdmin, isBlocked } = useContext(AppContext)
+  const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext)
 
   useEffect(() => {
     return onValue(ref(db, `posts/${id}`), snapshot => {
@@ -78,7 +78,7 @@ export default function SinglePost() {
           <button type="submit">Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
-      ) :  ((isAuthor && !isBlocked) || isAdmin) && (
+      ) :  ((isAuthor && !isBlocked) || isAdmin || isOwner) && (
         <div>
           <button onClick={handleEdit}>Edit</button>
           <button onClick={handleDelete}>Delete</button>
