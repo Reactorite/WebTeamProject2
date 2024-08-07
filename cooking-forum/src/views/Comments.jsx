@@ -6,7 +6,7 @@ import { update, ref, get } from "firebase/database";
 import { db } from "../config/firebase-config.js";
 
 export default function Comments({ postId }) {
-  const { userData } = useContext(AppContext);
+  const { userData, isAdmin, isBlocked } = useContext(AppContext);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState({ id: '', content: '' });
@@ -92,8 +92,7 @@ export default function Comments({ postId }) {
 
   return (
     <div>
-      <h1>Comments:</h1>
-      <CreateComment postId={postId} addComment={addComment} />
+      <h2>Comments:</h2>
       {comments.length > 0 ? comments.map(c => {
         const isAuthor = userData && userData.handle === c.author;
 
@@ -103,9 +102,9 @@ export default function Comments({ postId }) {
               {c.author} <br />
               {new Date(c.createdOn).toLocaleString()} <br />
               {c.content} <br />
-              <button onClick={() => toggleLike(c.id)}>
+              {!isBlocked && <button onClick={() => toggleLike(c.id)}>
                 {c.likedBy?.includes(userData?.handle) ? 'Dislike' : 'Like'}
-              </button>
+              </button>}
               {isEditing && c.id === editContent.id ? (
                 <form onSubmit={handleEditSubmit}>
                   <label htmlFor="editContent">Content:</label>
@@ -116,16 +115,19 @@ export default function Comments({ postId }) {
                   <button type="submit">Save</button>
                   <button type="button" onClick={() => { setIsEditing(false); setEditContent({ id: '', content: '' }); }}>Cancel</button>
                 </form>
-              ) : isAuthor && (
+              ) : ((isAuthor && !isBlocked) || isAdmin) && (
                 <div>
                   <button onClick={() => handleDelete(c.id)}>Delete Comment</button>
                   <button onClick={() => handleEdit(c.id)}>Edit Comment</button>
                 </div>
               )}
-            </div>
-          </div>
+            </div> <br />
+          </div> 
         );
       }) : 'No Comments yet.'}
+      {!isBlocked ? <CreateComment postId={postId} addComment={addComment}/> : "You are banned and cant have any actions!"} <br />
     </div>
+    
   );
 }
+

@@ -16,7 +16,7 @@ import { dislikePost, likePost } from '../services/posts.service';
  * @returns 
  */
 export default function Post({ post }) {
-  const { userData } = useContext(AppContext);
+  const { userData, isBlocked } = useContext(AppContext);
   const toggleLike = async () => {
     const isLiked = post.likedBy.includes(userData.handle);
     try {
@@ -35,7 +35,7 @@ export default function Post({ post }) {
       <h3>{post.title}</h3>
       <p>{post.content}</p>
       <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
-      <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
+      {!isBlocked ? <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button> : "You cant act because you are banned"}
     </div>
   )
 }

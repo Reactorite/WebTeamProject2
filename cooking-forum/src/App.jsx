@@ -23,6 +23,8 @@ function App() {
   const [appState, setAppState] = useState({
     user: null,
     userData: null,
+    isAdmin: false,
+    isBlocked: false
   });
   const [user, loading, error] = useAuthState(auth);
 
@@ -38,7 +40,9 @@ function App() {
     getUserData(user.uid)
       .then(data => {
         const userData = data[Object.keys(data)[0]];
-        setAppState(prev => ({ ...prev, userData }));
+        const isAdmin = userData?.isAdmin || false; 
+        const isBlocked = userData?.isBlocked || false;
+        setAppState(prev => ({ ...prev, userData, isAdmin, isBlocked}));
       });
   }, [user]);
 
