@@ -14,6 +14,8 @@ export default function Register() {
     lastName: '',
     password: '',
     repeatPassword: '',
+    isAdmin: false,
+    isBlocked: false
   });
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { setAppState } = useContext(AppContext);
