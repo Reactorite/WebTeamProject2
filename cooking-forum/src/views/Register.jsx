@@ -4,6 +4,7 @@ import { AppContext } from "../state/app.context";
 import { useNavigate } from "react-router-dom";
 import { createUserHandle } from "../services/users.service";
 import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "../constants/constants";
+import './Styles/Register.css';
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -62,7 +63,9 @@ export default function Register() {
 
   return (
     <>
+    <div className="header">
       <h1>Register</h1>
+      </div>
       <label htmlFor="handle">Username: </label>
       <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" id="handle" /><br /><br />
       <label htmlFor="email">Email: </label>

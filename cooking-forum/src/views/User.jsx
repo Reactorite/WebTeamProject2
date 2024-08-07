@@ -38,13 +38,14 @@ export default function User() {
     return <div>Loading...</div>;
   }
 
-  const { createdOn, handle } = userData;
+  const { createdOn, handle, isAdmin, isBlocked } = userData;
   // const likedPosts = likePost ? Object.keys(likePost).length : 0;
 
   return (
     <div>
       <h1>{handle}</h1>
-      <p>Rank: </p>
+      <p>Rank: {isAdmin ? "Admin" : "User"}</p>
+      <p>Status: {isBlocked ? "Blocked" : "Active"}</p>
       <NavLink to="/user/my-posts">My Posts: {userPosts.length}</NavLink><br />
       <NavLink to="/user/liked-posts">Liked Posts: {likedPosts}</NavLink>
       <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p>
