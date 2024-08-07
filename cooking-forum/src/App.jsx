@@ -18,6 +18,7 @@ import Footer from './components/Footer';
 import User from './views/User';
 import UserLikes from './views/UserLikes';
 import UserPosts from './views/UserPosts';
+import SingleUser from './views/SingleUser';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -40,9 +41,9 @@ function App() {
     getUserData(user.uid)
       .then(data => {
         const userData = data[Object.keys(data)[0]];
-        const isAdmin = userData?.isAdmin || false; 
+        const isAdmin = userData?.isAdmin || false;
         const isBlocked = userData?.isBlocked || false;
-        setAppState(prev => ({ ...prev, userData, isAdmin, isBlocked}));
+        setAppState(prev => ({ ...prev, userData, isAdmin, isBlocked }));
       });
   }, [user]);
 
@@ -60,6 +61,7 @@ function App() {
           <Route path='/user' element={user && appState.userData && <Authenticated><User /></Authenticated>} />
           <Route path='/user/liked-posts' element={user && appState.userData && <Authenticated><UserLikes /></Authenticated>} />
           <Route path='/user/my-posts' element={user && appState.userData && <Authenticated><UserPosts author={appState.userData?.handle} /></Authenticated>} />
+          <Route path='/single-user/:handle' element={<SingleUser />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />

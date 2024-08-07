@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const RecentPosts = ({ id, author, title, content, createdOn, likeCount, commentsCounter }) => {
     return (
@@ -7,7 +7,7 @@ const RecentPosts = ({ id, author, title, content, createdOn, likeCount, comment
             <h3>
                 <Link to={`/posts/${id}`}>{title}</Link>
             </h3>
-            <p>Created by: {author}</p>
+            <p>Created by: <NavLink to={`/single-user/${author}`}>{author}</NavLink></p>
             <p>{content}</p>
             <p>Posted: {new Date(createdOn).toLocaleString()}</p>
             <p>Likes: {likeCount}</p>
