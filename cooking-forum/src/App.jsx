@@ -48,9 +48,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/posts' element={user && <Authenticated><Posts /></Authenticated>} />
-          <Route path='/posts/:id' element={user && <Authenticated><SinglePost /></Authenticated>} />
-          <Route path='/posts-create' element={user && <Authenticated><CreatePost /></Authenticated>} />
+          <Route path='/posts' element={user && appState.userData && <Authenticated><Posts /></Authenticated>} />
+          <Route path='/posts/:id' element={user && appState.userData && <Authenticated><SinglePost /></Authenticated>} />
+          <Route path='/posts-create' element={user && appState.userData && <Authenticated><CreatePost /></Authenticated>} />
           <Route path='/login' element={!user && <Login />} />
           <Route path='/register' element={!user && <Register />} />
           <Route path='/user' element={user && appState.userData && <Authenticated><User /></Authenticated>} />
