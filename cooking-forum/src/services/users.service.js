@@ -1,4 +1,4 @@
-import { get, set, ref, query, equalTo, orderByChild } from 'firebase/database';
+import { get, set, ref, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const getUserByHandle = async (handle) => {
@@ -23,4 +23,20 @@ export const getAllUsers = async () => {
     users.push(childSnapshot.val());
   });
   return users;
+}
+
+export const makeUserAdmin = async (handle) => {
+  await update(ref(db, `users/${handle}`), { isAdmin: true });
+};
+
+export const blockUser = async (handle) => {
+  await update(ref(db, `users/${handle}`), { isBlocked: true });
+};
+
+export const demoteUser = async (handle) => {
+  await update(ref(db, `users/${handle}`), { isAdmin: false });
+};
+
+export const unblockUser = async (handle) => {
+  await update(ref(db, `users/${handle}`), { isBlocked: false });
 };
