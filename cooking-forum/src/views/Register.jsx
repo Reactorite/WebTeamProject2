@@ -55,7 +55,7 @@ export default function Register() {
         return alert(`User {${user.handle}} already exists!`);
       }
       const credential = await registerUser(user.email, user.password);
-      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email);
+      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked);
       setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString() }}));
       navigate('/');
     } catch (error) {
