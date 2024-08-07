@@ -15,7 +15,8 @@ export default function Register() {
     password: '',
     repeatPassword: '',
     isAdmin: false,
-    isBlocked: false
+    isBlocked: false,
+    isOwner: false,
   });
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { setAppState } = useContext(AppContext);
@@ -55,8 +56,8 @@ export default function Register() {
         return alert(`User {${user.handle}} already exists!`);
       }
       const credential = await registerUser(user.email, user.password);
-      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked);
-      setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString() }}));
+      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked, user.isOwner);
+      setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString() } }));
       navigate('/');
     } catch (error) {
       alert(error.message);
@@ -65,8 +66,8 @@ export default function Register() {
 
   return (
     <>
-    <div className="header">
-      <h1>Register</h1>
+      <div className="header">
+        <h1>Register</h1>
       </div>
       <label htmlFor="handle">Username: </label>
       <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" id="handle" /><br /><br />

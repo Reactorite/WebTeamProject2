@@ -5,5 +5,6 @@ export const AppContext = createContext({
   userData: null,
   isAdmin: false,
   isBlocked: false,
-  setAppState: () => {}
+  isOwner: false,
+  setAppState: () => { }
 });

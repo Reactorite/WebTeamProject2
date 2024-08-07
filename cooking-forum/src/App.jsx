@@ -25,7 +25,8 @@ function App() {
     user: null,
     userData: null,
     isAdmin: false,
-    isBlocked: false
+    isBlocked: false,
+    isOwner: false,
   });
   const [user, loading, error] = useAuthState(auth);
 
@@ -43,7 +44,8 @@ function App() {
         const userData = data[Object.keys(data)[0]];
         const isAdmin = userData?.isAdmin || false;
         const isBlocked = userData?.isBlocked || false;
-        setAppState(prev => ({ ...prev, userData, isAdmin, isBlocked }));
+        const isOwner = userData?.isOwner || false;
+        setAppState(prev => ({ ...prev, userData, isAdmin, isBlocked, isOwner }));
       });
   }, [user]);
 
@@ -61,7 +63,7 @@ function App() {
           <Route path='/user' element={user && appState.userData && <Authenticated><User /></Authenticated>} />
           <Route path='/user/liked-posts' element={user && appState.userData && <Authenticated><UserLikes /></Authenticated>} />
           <Route path='/user/my-posts' element={user && appState.userData && <Authenticated><UserPosts author={appState.userData?.handle} /></Authenticated>} />
-          <Route path='/single-user/:handle' element={<SingleUser />} />
+          <Route path='/single-user/:handle' element={user && appState.userData && <SingleUser />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />

@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserByHandle } from "../services/users.service";
 import RecentPosts from "./RecentPosts";
 import { getAllPosts, likePostCount } from "../services/posts.service";
+import { AppContext } from "../state/app.context";
 export default function SingleUser() {
   const { handle } = useParams();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
+  const userData = useContext(AppContext);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -39,12 +41,16 @@ export default function SingleUser() {
   }
 
   const { createdOn, isAdmin } = user;
+  const { isOwner } = userData;
 
   return (
     <div>
       <h1>{handle}</h1>
-      <p>Rank: {isAdmin ? "Admin" : "User"}</p>
-      <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p>
+      <p>Rank: {isAdmin ? "Admin" : isOwner ? "Owner" : "User"}</p>
+      <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p><br />
+      {(isOwner) && <button>Make admin</button>}
+      {(userData.isAdmin || isOwner) && <button>Block</button>}
+      <h2>{handle}&apos;s posts</h2>
       {posts.length > 0 && posts.map(p =>
         <RecentPosts
           key={p.id}
