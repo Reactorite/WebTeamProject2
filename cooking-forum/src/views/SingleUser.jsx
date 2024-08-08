@@ -7,7 +7,7 @@ import { AppContext } from "../state/app.context";
 import Modal from "../components/Modal/Modal";
 
 export default function SingleUser() {
-  const userData = useContext(AppContext);
+  const { userData } = useContext(AppContext);
   const { handle } = useParams();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -110,16 +110,18 @@ export default function SingleUser() {
           />
         </div>
       )}
-      <p>Rank: {isAdmin ? "Admin" : isOwner ? "Owner" : "User"}</p>
+      <p>Rank: {isAdmin ? "Admin" : user.isOwner ? "Owner" : "User"}</p>
       <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p><br />
-      {(isOwner && !isAdmin)
-        ? <button onClick={() => handleMakeAdmin(handle)}>Promote</button>
-        : (isOwner && isAdmin) ? <button onClick={() => handleDemoteAdmin(handle)}>Demote</button>
-          : null}
-      {((userData.isAdmin || isOwner) && !isBlocked)
-        ? <button onClick={() => handleBlockUser(handle)}>Block</button>
-        : ((userData.isAdmin || isOwner) && isBlocked) ? <button onClick={() => handleUnblockUser(handle)}>Unblock</button>
-          : null}
+      {!user.isAdmin && !user.isOwner && (isOwner && !isAdmin) ? (
+        <button onClick={() => handleMakeAdmin(handle)}>Promote</button>
+      ) : (isOwner && isAdmin) ? (
+        <button onClick={() => handleDemoteAdmin(handle)}>Demote</button>
+      ) : null}
+      {!isAdmin && !user.isOwner && (isOwner || userData.isAdmin) && !isBlocked ? (
+        <button onClick={() => handleBlockUser(handle)}>Block</button>
+      ) : !isAdmin && (isOwner || userData.isAdmin) && isBlocked ? (
+        <button onClick={() => handleUnblockUser(handle)}>Unblock</button>
+      ) : null}
       <h2>{handle}&apos;s posts</h2>
       {posts.length > 0 && posts.map(p =>
         <RecentPosts
