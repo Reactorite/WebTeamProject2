@@ -10,14 +10,18 @@ export default function User() {
   const [likedPosts, setLikedPosts] = useState(0);
   const [userPosts, setPosts] = useState([]);
   const [profilePictureURL, setProfilePictureURL] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   useEffect(() => {
     if (userData && userData.handle) {
       const userRef = ref(db, `users/${userData.handle}`);
       
       const unsubscribe = onValue(userRef, (snapshot) => {
-        const userData = snapshot.val();
-        setProfilePictureURL(userData.profilePictureURL);
+        const data = snapshot.val();
+        setProfilePictureURL(data.profilePictureURL);
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
       });
 
       return () => unsubscribe();
@@ -38,7 +42,7 @@ export default function User() {
     return <div>Loading...</div>;
   }
 
-  const { createdOn, handle, isAdmin, isBlocked, isOwner, firstName, lastName } = userData;
+  const { createdOn, handle, isAdmin, isBlocked, isOwner } = userData;
 
   return (
     <div>
