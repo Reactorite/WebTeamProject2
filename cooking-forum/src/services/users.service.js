@@ -8,7 +8,7 @@ export const getUserByHandle = async (handle) => {
 };
 
 export const createUserHandle = async (handle, uid, firstName, lastName, email, isAdmin, isBlocked, isOwner, profilePictureURL = '') => {
-  const user = { handle, uid, firstName, lastName, email, isAdmin, isBlocked, isOwner, profilePictureURL, createdOn: new Date().toString() };
+  const user = { handle, uid, firstName, lastName, email, isAdmin, isBlocked, isOwner, profilePictureURL: profilePictureURL || `https://static.independent.co.uk/2022/06/28/10/anonymous%20terra%20luna%20crypto.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp`, createdOn: new Date().toString() };
   await set(ref(db, `users/${handle}`), user);
 };
 

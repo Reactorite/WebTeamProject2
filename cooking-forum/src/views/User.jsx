@@ -9,18 +9,22 @@ export default function User() {
   const { userData } = useContext(AppContext);
   const [likedPosts, setLikedPosts] = useState(0);
   const [userPosts, setPosts] = useState([]);
+  const [profilePictureURL, setProfilePictureURL] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   useEffect(() => {
     if (userData && userData.handle) {
-      const userRef = ref(db, `users/${userData.handle}/likePost`);
-      return onValue(userRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const posts = snapshot.val();
-          setLikedPosts(Object.keys(posts).length);
-        } else {
-          setLikedPosts(0);
-        }
+      const userRef = ref(db, `users/${userData.handle}`);
+      
+      const unsubscribe = onValue(userRef, (snapshot) => {
+        const data = snapshot.val();
+        setProfilePictureURL(data.profilePictureURL);
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
       });
+
+      return () => unsubscribe();
     }
   }, [userData]);
 
@@ -38,15 +42,17 @@ export default function User() {
     return <div>Loading...</div>;
   }
 
-  const { createdOn, handle, isAdmin, isBlocked, isOwner, profilePictureURL, firstName, lastName } = userData;
+  const { createdOn, handle, isAdmin, isBlocked, isOwner } = userData;
 
   return (
     <div>
       <h2>Username: {handle}</h2>
       {profilePictureURL ? (
-        <a href={profilePictureURL} target="_blank" rel="noopener noreferrer">
-          <img src={profilePictureURL} alt={`${handle}'s profile`} style={{ width: 100, height: 100, borderRadius: '75%' }} />
-        </a>
+        <div>
+          <a href={profilePictureURL} target="_blank" rel="noopener noreferrer">
+            <img src={profilePictureURL} alt={`${handle}'s profile`} style={{ width: 100, height: 100, borderRadius: '75%' }} />
+          </a>
+        </div>
       ) : (
         <p>No profile picture available</p>
       )}

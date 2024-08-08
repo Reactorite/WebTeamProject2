@@ -17,6 +17,7 @@ export default function Register() {
     isAdmin: false,
     isBlocked: false,
     isOwner: false,
+    profilePictureURL: null,
   });
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { setAppState } = useContext(AppContext);
@@ -56,7 +57,7 @@ export default function Register() {
         return alert(`User {${user.handle}} already exists!`);
       }
       const credential = await registerUser(user.email, user.password);
-      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked, user.isOwner);
+      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked, user.isOwner, user.profilePictureURL || 'https://static.independent.co.uk/2022/06/28/10/anonymous%20terra%20luna%20crypto.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp'); 
       setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString() } }));
       navigate('/');
     } catch (error) {
