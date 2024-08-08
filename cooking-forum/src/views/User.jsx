@@ -8,7 +8,7 @@ import { getAllPosts } from "../services/posts.service";
 export default function User() {
   const { userData } = useContext(AppContext);
   const [likedPosts, setLikedPosts] = useState(0);
-  const [userPosts, setPosts] = useState([])
+  const [userPosts, setPosts] = useState([]);
 
   useEffect(() => {
     if (userData && userData.handle) {
@@ -32,23 +32,34 @@ export default function User() {
     };
 
     fetchPosts();
-  }, []);
+  }, [userData]);
 
   if (!userData) {
     return <div>Loading...</div>;
   }
 
-  const { createdOn, handle, isAdmin, isBlocked, isOwner } = userData;
-  // const likedPosts = likePost ? Object.keys(likePost).length : 0;
+  const { createdOn, handle, isAdmin, isBlocked, isOwner, profilePictureURL, firstName, lastName } = userData;
 
   return (
     <div>
-      <h1>{handle}</h1>
+      <h2>Username: {handle}</h2>
+      {profilePictureURL ? (
+        <a href={profilePictureURL} target="_blank" rel="noopener noreferrer">
+          <img src={profilePictureURL} alt={`${handle}'s profile`} style={{ width: 100, height: 100, borderRadius: '75%' }} />
+        </a>
+      ) : (
+        <p>No profile picture available</p>
+      )}
+      <p>First name: {firstName}</p>
+      <p>Last name: {lastName}</p>
       <p>Rank: {isAdmin ? "Admin" : isOwner ? "Owner" : "User"}</p>
       <p>Status: {isBlocked ? "Blocked" : "Active"}</p>
       <NavLink to="/user/my-posts">My Posts: {userPosts.length}</NavLink><br />
       <NavLink to="/user/liked-posts">Liked Posts: {likedPosts}</NavLink>
       <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p>
+      <NavLink to="/user/edit">
+        <button>Edit Profile</button>
+      </NavLink>
     </div>
   );
 }
