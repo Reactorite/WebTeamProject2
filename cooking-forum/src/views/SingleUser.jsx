@@ -4,12 +4,15 @@ import { blockUser, demoteUser, getUserByHandle, makeUserAdmin, unblockUser } fr
 import RecentPosts from "./RecentPosts";
 import { getAllPosts, likePostCount } from "../services/posts.service";
 import { AppContext } from "../state/app.context";
+import Modal from "../components/Modal/Modal";
 export default function SingleUser() {
 
   const userData = useContext(AppContext);
   const { handle } = useParams();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -17,7 +20,8 @@ export default function SingleUser() {
         const userData = await getUserByHandle(handle);
         setUser(userData);
       } catch (error) {
-        alert(error.message);
+        setModalMessage(error.message);
+        setModalOpen(true);
       }
     };
 
@@ -30,7 +34,8 @@ export default function SingleUser() {
         }));
         setPosts(postsWithLikeCounts.filter(post => post.author === handle));
       } catch (error) {
-        alert(error.message);
+        setModalMessage(error.message);
+        setModalOpen(true);
       }
     };
 
@@ -42,9 +47,11 @@ export default function SingleUser() {
     try {
       await makeUserAdmin(handle);
       setUser({ ...user, isAdmin: true });
-      alert('User promoted to admin successfully!');
+      setModalMessage('User promoted to admin successfully!');
+      setModalOpen(true);
     } catch (error) {
-      alert(`${error.message} trying to promote the user`);
+      setModalMessage(`${error.message} trying to promote the user`);
+      setModalOpen(true);
     }
   };
 
@@ -52,9 +59,11 @@ export default function SingleUser() {
     try {
       await demoteUser(handle);
       setUser({ ...user, isAdmin: false });
-      alert('User demoted from admin successfully!');
+      setModalMessage('User demoted from admin successfully!');
+      setModalOpen(true);
     } catch (error) {
-      alert(`${error.message} trying to demote the user`);
+      setModalMessage(`${error.message} trying to demote the user`);
+      setModalOpen(true);
     }
   };
 
@@ -62,9 +71,11 @@ export default function SingleUser() {
     try {
       await blockUser(handle);
       setUser({ ...user, isBlocked: true });
-      alert('User blocked successfully!');
+      setModalMessage('User blocked successfully!');
+      setModalOpen(true);
     } catch (error) {
-      alert(`${error.message} trying to block the user`);
+      setModalMessage(`${error.message} trying to block the user`);
+      setModalOpen(true);
     }
   };
 
@@ -72,9 +83,11 @@ export default function SingleUser() {
     try {
       await unblockUser(handle);
       setUser({ ...user, isBlocked: false });
-      alert('User unblocked successfully!');
+      setModalMessage('User unblocked successfully!');
+      setModalOpen(true);
     } catch (error) {
-      alert(`${error.message} trying to unblock the user`);
+      setModalMessage(`${error.message} trying to unblock the user`);
+      setModalOpen(true);
     }
   };
 
@@ -111,6 +124,12 @@ export default function SingleUser() {
           commentsCounter={p.commentsCounter}
         />
       )}
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Notification"
+        message={modalMessage}
+      />
     </div>
   );
 }
