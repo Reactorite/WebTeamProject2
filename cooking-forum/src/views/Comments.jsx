@@ -4,12 +4,16 @@ import CreateComment from "./CreateComment";
 import { AppContext } from '../state/app.context.js';
 import { update, ref, get } from "firebase/database";
 import { db } from "../config/firebase-config.js";
+import Modal from "../components/Modal/Modal.jsx";
+import PropTypes from 'prop-types';
 
 export default function Comments({ postId }) {
   const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState({ id: '', content: '' });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     getAllComments(postId)
@@ -25,7 +29,7 @@ export default function Comments({ postId }) {
     const postRef = ref(db, `posts/${postId}`);
     const postSnapshot = await get(postRef);
     const post = postSnapshot.val();
-    const newCounter = (post.commentsCounter > 1) ? post.commentsCounter - 1 : 0;    
+    const newCounter = (post.commentsCounter > 1) ? post.commentsCounter - 1 : 0;
     return { commentsCounter: newCounter };
   };
 
@@ -35,9 +39,11 @@ export default function Comments({ postId }) {
       setComments(comments.filter(comment => comment.id !== commentId));
       const counterUpdate = await decrementCounter();
       await update(ref(db, `posts/${postId}`), counterUpdate);
-      alert('Comment deleted successfully!');
+      setModalMessage('Comment deleted successfully!');
+      setModalOpen(true);
     } catch (error) {
-      alert(`${error.message} trying to delete the comment`);
+      setModalMessage(`${error.message} trying to delete the comment`);
+      setModalOpen(true);
     }
   };
 
@@ -56,11 +62,13 @@ export default function Comments({ postId }) {
     event.preventDefault();
     try {
       await update(ref(db, `comments/${editContent.id}`), { content: editContent.content });
-      setComments(prevComments => prevComments.map(comment => 
+      setComments(prevComments => prevComments.map(comment =>
         comment.id === editContent.id ? { ...comment, content: editContent.content } : comment
       ));
       setIsEditing(false);
       setEditContent({ id: '', content: '' });
+      setModalMessage('Comment updated successfully!');
+      setModalOpen(true);
     } catch (error) {
       alert(error.message);
     }
@@ -122,12 +130,22 @@ export default function Comments({ postId }) {
                 </div>
               )}
             </div> <br />
-          </div> 
+          </div>
         );
       }) : 'No Comments yet.'} <br />
-      {!isBlocked ? <CreateComment postId={postId} addComment={addComment}/> : "You are banned and cant have any actions!"} <br />
+      {!isBlocked ? <CreateComment postId={postId} addComment={addComment} /> : "You are banned and cant have any actions!"} <br />
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Notification"
+        message={modalMessage}
+      />
     </div>
-    
+
   );
 }
 
+
+Comments.propTypes = {
+  postId: PropTypes.string.isRequired,
+};
