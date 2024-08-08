@@ -35,7 +35,7 @@ export default function Posts() {
     }
 
     if (sortOption === "date") {
-      updatedPosts.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
+      updatedPosts.sort((a, b) => new Date(a.createdOn) - new Date(b.createdOn));
     } else if (sortOption === "likes") {
       updatedPosts.sort((a, b) => b.likeCount - a.likeCount);
     }
