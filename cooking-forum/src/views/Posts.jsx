@@ -30,7 +30,6 @@ export default function Posts() {
 
     if (filter) {
       updatedPosts = updatedPosts.filter(post =>
-        post.title.toLowerCase().includes(filter.toLowerCase()) ||
         post.author.toLowerCase().includes(filter.toLowerCase())
       );
     }
@@ -48,7 +47,7 @@ export default function Posts() {
     <div>
       <h1>Posts:</h1>
       <div>
-        <label htmlFor="filter">Filter by author or title:</label>
+        <label htmlFor="filter">Filter by author:</label>
         <input
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
