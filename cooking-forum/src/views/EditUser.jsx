@@ -8,10 +8,20 @@ export default function EditUser() {
   const [firstName, setFirstName] = useState(userData?.firstName || "");
   const [lastName, setLastName] = useState(userData?.lastName || "");
   const [profilePicture, setProfilePicture] = useState(null);
+  const [previewImage, setPreviewImage] = useState(userData?.profilePictureURL || ""); 
   const navigate = useNavigate();
 
   const handleFileChange = (event) => {
-    setProfilePicture(event.target.files[0]);
+    const file = event.target.files[0];
+    setProfilePicture(file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewImage(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -58,6 +68,17 @@ export default function EditUser() {
           accept="image/*"
           onChange={handleFileChange}
         />
+        <br />
+        {previewImage && (
+          <div>
+            <p>Profile Picture Preview:</p>
+            <img
+              src={previewImage}
+              alt="Profile Preview"
+              style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
+            />
+          </div>
+        )}
         <br />
         <button type="submit">Save Changes</button>
       </form>

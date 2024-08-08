@@ -5,8 +5,8 @@ import RecentPosts from "./RecentPosts";
 import { getAllPosts, likePostCount } from "../services/posts.service";
 import { AppContext } from "../state/app.context";
 import Modal from "../components/Modal/Modal";
-export default function SingleUser() {
 
+export default function SingleUser() {
   const userData = useContext(AppContext);
   const { handle } = useParams();
   const [user, setUser] = useState(null);
@@ -95,13 +95,22 @@ export default function SingleUser() {
     return <div>Loading...</div>;
   }
 
-  const { createdOn, isAdmin, isBlocked } = user;
+  const { createdOn, isAdmin, isBlocked, profilePictureURL } = user;
   const { isOwner } = userData;
 
   return (
     <div>
       <h1>{handle}</h1>
-      <p>Rank: {isAdmin ? "Admin" : user.isOwner ? "Owner" : "User"}</p>
+      {profilePictureURL && (
+        <div>
+          <img
+            src={profilePictureURL}
+            alt={`${handle}'s profile`}
+            style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
+          />
+        </div>
+      )}
+      <p>Rank: {isAdmin ? "Admin" : isOwner ? "Owner" : "User"}</p>
       <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p><br />
       {(isOwner && !isAdmin)
         ? <button onClick={() => handleMakeAdmin(handle)}>Promote</button>
