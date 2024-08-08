@@ -16,26 +16,43 @@ export default function User() {
   useEffect(() => {
     if (userData && userData.handle) {
       const userRef = ref(db, `users/${userData.handle}`);
-      
-      const unsubscribe = onValue(userRef, (snapshot) => {
+
+      const unsubscribeUser = onValue(userRef, (snapshot) => {
         const data = snapshot.val();
-        setProfilePictureURL(data.profilePictureURL);
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
+        if (data) {
+          setProfilePictureURL(data.profilePictureURL || '');
+          setFirstName(data.firstName || '');
+          setLastName(data.lastName || '');
+        }
       });
 
-      return () => unsubscribe();
+      const likedPostsRef = ref(db, `users/${userData.handle}/likePost`);
+      const unsubscribeLikedPosts = onValue(likedPostsRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const posts = snapshot.val();
+          setLikedPosts(Object.keys(posts).length);
+        } else {
+          setLikedPosts(0);
+        }
+      });
+
+      return () => {
+        unsubscribeUser();
+        unsubscribeLikedPosts();
+      };
     }
   }, [userData]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const allPosts = await getAllPosts();
-      const userPosts = allPosts.filter(post => post.author === userData.handle);
-      setPosts(userPosts);
-    };
+    if (userData && userData.handle) {
+      const fetchPosts = async () => {
+        const allPosts = await getAllPosts();
+        const userPosts = allPosts.filter(post => post.author === userData.handle);
+        setPosts(userPosts);
+      };
 
-    fetchPosts();
+      fetchPosts();
+    }
   }, [userData]);
 
   if (!userData) {
