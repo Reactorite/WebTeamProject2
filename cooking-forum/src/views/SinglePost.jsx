@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
-import { ref, onValue, update } from 'firebase/database';
+import { ref, onValue, update, set } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import Post from '../components/Post';
 import { useNavigate, useParams } from "react-router-dom"
 import { deletePost } from "../services/posts.service.js";
 import { AppContext } from '../state/app.context.js';
 import Comments from './Comments.jsx';
+import Modal from '../components/Modal/Modal.jsx';
 
 
 export default function SinglePost() {
@@ -13,6 +14,8 @@ export default function SinglePost() {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
   const [editTitle, setEditTitle] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
   const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext)
@@ -37,26 +40,31 @@ export default function SinglePost() {
     setEditContent(post.content);
   }
 
-  function handleEditSubmit(e) {
+  async function handleEditSubmit(e) {
     e.preventDefault();
-    update(ref(db, `posts/${id}`), { title: editTitle, content: editContent })
-      .then(() => {
-        setPost(prevPost => ({ ...prevPost, title: editTitle, content: editContent }));
-        setIsEditing(false);
-      })
-      .catch(e => alert(e.message));
+    try {
+      await update(ref(db, `posts/${id}`), { title: editTitle, content: editContent });
+      setPost({ ...post, title: editTitle, content: editContent });
+      setIsEditing(false);
+      setModalMessage('Post updated successfully!');
+      setModalOpen(true);
+    } catch (error) {
+      setModalMessage(`Error updating post: ${error.message}`);
+      setModalOpen(true);
+    }
   }
-  
+
   const handleDelete = async () => {
     try {
       await deletePost(id);
-      alert('Post deleted successfully!')
-      navigate('/')
+      setModalMessage('Post deleted successfully!');
+      setModalOpen(true);
     } catch (error) {
-      alert(`${error.message} trying to delete the post`)
+      setModalMessage(`${error.message} trying to delete the post`);
+      setModalOpen(true);
     }
   }
-  
+
   const isAuthor = userData && userData.handle === post?.author
 
   return (
@@ -78,13 +86,30 @@ export default function SinglePost() {
           <button type="submit">Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
-      ) :  ((isAuthor && !isBlocked) || isAdmin || isOwner) && (
+      ) : ((isAuthor && !isBlocked) || isAdmin || isOwner) && (
         <div>
           <button onClick={handleEdit}>Edit</button>
           <button onClick={handleDelete}>Delete</button>
         </div>
       )}
       <Comments postId={id} />
+      {!isEditing && <Modal
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          navigate(-1);
+        }}
+        title="Notification"
+        message={modalMessage}
+      />}
+      {(editTitle || editContent) && <Modal
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+        }}
+        title="Notification"
+        message={modalMessage}
+      />}
     </div>
   );
 }
