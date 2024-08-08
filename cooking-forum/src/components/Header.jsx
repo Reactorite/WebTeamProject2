@@ -33,7 +33,7 @@ export default function Header() {
         {!user && <NavLink to="/login">Login</NavLink>}
         {!user && <NavLink to="/register">Register</NavLink>}
         {user && <button onClick={logout}>Logout</button>}
-        {user && userData && <NavLink to="/user">{user && userData && <img src={userData.profilePictureURL} alt={`${userData.handle}'s profile`} style={{ width: 75, height: 75, borderRadius: '75%' }} />}</NavLink>}
+        {user && userData && <NavLink to="/user">{user && userData && <img src={userData.profilePictureURL || `https://static.independent.co.uk/2022/06/28/10/anonymous%20terra%20luna%20crypto.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp`} alt={`${userData.handle}'s profile`} style={{ width: 75, height: 75, borderRadius: '75%' }} />}</NavLink>}
       </nav>
     </header>
   );
