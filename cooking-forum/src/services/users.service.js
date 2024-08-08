@@ -47,8 +47,9 @@ export const updateUserData = async (handle, firstName, lastName) => {
 };
 
 export const updateUserProfile = async (handle, firstName, lastName, file) => {
+  const userRef = ref(db, `users/${handle}`);
+  
   let profilePictureURL = '';
-
   if (file) {
     const storage = getStorage();
     const imageRef = storageRef(storage, `profile-pictures/${handle}`);
@@ -56,11 +57,14 @@ export const updateUserProfile = async (handle, firstName, lastName, file) => {
     profilePictureURL = await getDownloadURL(imageRef);
   }
 
-  await update(ref(db, `users/${handle}`), {
-    firstName,
-    lastName,
-    profilePictureURL,
+  const snapshot = await get(userRef);
+  const currentData = snapshot.val();
+
+  await update(userRef, {
+    firstName: firstName || currentData.firstName,
+    lastName: lastName || currentData.lastName,
+    profilePictureURL: profilePictureURL || currentData.profilePictureURL,
   });
 
-  return profilePictureURL;
+  return profilePictureURL || currentData.profilePictureURL;
 };
