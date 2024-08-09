@@ -65,10 +65,6 @@ export default function Register() {
       return alert(`Last name must be at least ${MIN_NAME_LENGTH} characters long and max ${MAX_NAME_LENGTH}`);
     }
 
-    if (secretKey !== '123456') {
-      return alert('Secret key is incorrect!');
-    }
-
     try {
       const userExists = false;
       if (userExists) {
