@@ -1,0 +1,107 @@
+.header {
+    color: rgb(40, 125, 200);
+    display: flex;
+    justify-content: space-between;
+}
+
+div > h1 {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+div > h4 {
+    font-weight: 400;
+    margin-top: 39px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.header > h1 img.reactLogo {
+    margin-left: -5px;
+}
+
+.underLine1 {
+    height: 5px;
+    background-color: rgb(40, 125, 200);
+    border: none;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: -30px;
+}
+
+.underLine2 {
+    height: 5px;
+    background-color: rgb(40, 125, 200);
+    border: none;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 1px;
+}
+
+.reactLogo {
+    height: 25px;
+    width: auto;
+    align-content: left;
+    margin-bottom: -1px;
+    /* margin-left: 0px; */
+}
+
+.nav {
+    display: flex;
+    justify-content:initial;
+    align-items: center; /* Center items vertically */
+    padding: 0;
+    margin-top: -38px;
+    margin-bottom: -33px;
+}
+
+.nav-right {
+    display: flex;
+    /* margin-right: 20px; */
+    /* align-items: right; */
+    /* padding: 0; */
+    /* margin: 0; */
+    margin-left: 650px;
+    margin-top: -9px;
+    margin-bottom: 10px;
+    /* align-content: right; */
+}
+
+/* #users { */
+    /* align-items: right; */
+    /* margin-left: 20px; */
+    /* padding: 0; */
+    /* margin: 0; */
+/* } */
+  
+/* #posts { */
+    /* align-items: right; */
+    /* margin-left: 1000px; */
+    /* padding: 0; */
+    /* margin-left: 0; */
+/* } */
+
+  /* .nav-right > * {
+    margin-: 20px;
+  } */
+  
+
+/* #login {
+    margin: 0;
+    padding: 0;
+}
+
+#register {
+    margin: 0;
+    padding: 0;
+}
+
+#logout {
+    margin: 0;
+    padding: 0;
+}
+
+#user {
+    margin: 0;
+    padding: 0;
+} */

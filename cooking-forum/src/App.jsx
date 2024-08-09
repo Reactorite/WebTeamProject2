@@ -28,6 +28,7 @@ function App() {
     isBlocked: false,
     isOwner: false,
   });
+  // eslint-disable-next-line no-unused-vars
   const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import { AppContext } from '../state/app.context.js';
 import { update, ref, get } from "firebase/database";
 import { db } from "../config/firebase-config.js";
 
+// eslint-disable-next-line react/prop-types
 export default function Comments({ postId }) {
   const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext);
   const [comments, setComments] = useState([]);
