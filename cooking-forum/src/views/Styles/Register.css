@@ -117,3 +117,9 @@
 .password-x::before {
     content: "✘";
 }
+
+/* .register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */

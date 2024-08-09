@@ -48,7 +48,8 @@ export default function Register() {
     }
   };
 
-  const register = async () => {
+  const register = async (e) => {
+    e.preventDefault();
     if (!user.email || !user.password) {
       return alert('No credentials provided!');
     }
@@ -80,7 +81,8 @@ export default function Register() {
   };
 
   return (
-    <>
+    <div className="register-container">
+      <form>
         <div className="register-header">
           <h1>Register</h1>
         </div>
@@ -116,13 +118,14 @@ export default function Register() {
         <br />
         <div className="form-group">
           <label className="input-name" htmlFor="secretKey">Secret Key: </label>
-          <input value={secretKey} onChange={updateSecretKey} type="text" name="secretKey" id="secretKey" />
-          <span style={{ color: secretKeyMessage.startsWith('✅') ? 'green' : 'red' }}>
-            {secretKeyMessage}
-          </span>
+          <input value={secretKey} onChange={updateSecretKey} type="password" name="secretKey" id="secretKey" />
+          {secretKey.length === 0 ? null : secretKeyMessage.startsWith('✅')
+            ? <span className="password-check"> Secret key matched!</span>
+            : <span className="password-x"> Secret key not matched!</span>}
         </div>
         <br />
-        <button className="register-button" role="button" onClick={register}><span className="text">Register</span></button>
-    </>
+        <button id="reg-btn" className="register-button" role="button" onClick={register}><span className="text">Register</span></button>
+      </form>
+    </div>
   );
 }
