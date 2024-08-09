@@ -4,6 +4,7 @@ import { AppContext } from '../state/app.context';
 import { get, ref, update } from "firebase/database";
 import { db } from "../config/firebase-config";
 
+// eslint-disable-next-line react/prop-types
 export default function CreateComment({ postId, addComment }) {
   const [comment, setComment] = useState({
     author: '',

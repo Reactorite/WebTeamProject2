@@ -7,6 +7,7 @@ import { db } from "../config/firebase-config.js";
 import Modal from "../components/Modal/Modal.jsx";
 import PropTypes from 'prop-types';
 
+// eslint-disable-next-line react/prop-types
 export default function Comments({ postId }) {
   const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext);
   const [comments, setComments] = useState([]);
