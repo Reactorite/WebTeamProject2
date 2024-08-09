@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
 import { db } from "../config/firebase-config";
-import './Styles/PostsCount.css';
+// import './Styles/PostsCount.css';
 
 export default function PostCount() {
   const [postCount, setPostCount] = useState(0);
