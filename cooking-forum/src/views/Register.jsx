@@ -119,36 +119,16 @@ export default function Register() {
           )}
         </div>
         <br />
+        <div className="form-group">
+          <label className="input-name" htmlFor="secretKey">Secret Key: </label>
+          <input value={secretKey} onChange={updateSecretKey} type="text" name="secretKey" id="secretKey" />
+          <span style={{ color: secretKeyMessage.startsWith('✅') ? 'green' : 'red' }}>
+            {secretKeyMessage}
+          </span>
+        </div>
+        <br />
         <button className="register-button" role="button" onClick={register}><span className="text">Register</span></button>
       </form>
-      <div className="header">
-        <h1>Register</h1>
-      </div>
-      <label htmlFor="handle">Username: </label>
-      <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" id="handle" /><br /><br />
-      <label htmlFor="email">Email: </label>
-      <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" /><br /><br />
-      <label htmlFor="firstName">First name: </label>
-      <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" id="firstName" /><br /><br />
-      <label htmlFor="lastName">Last name: </label>
-      <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
-      <label htmlFor="password">Password: </label>
-      <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br /><br />
-      <label htmlFor="repeatPassword">Repeat Password: </label>
-      <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" />
-      {user.repeatPassword && (
-        <span style={{ color: passwordsMatch ? 'green' : 'red' }}>
-          {passwordsMatch ? '✅ Passwords match!' : '❌ Passwords do not match!'}
-        </span>
-      )}
-      <br />
-      <label htmlFor="secretKey">Secret Key: </label>
-      <input value={secretKey} onChange={updateSecretKey} type="text" name="secretKey" id="secretKey" />
-      <span style={{ color: secretKeyMessage.startsWith('✅') ? 'green' : 'red' }}>
-        {secretKeyMessage}
-      </span>
-      <br />
-      <button onClick={register}>Register</button>
     </>
   );
 }
