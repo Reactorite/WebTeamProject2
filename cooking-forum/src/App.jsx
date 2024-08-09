@@ -19,6 +19,7 @@ import User from './views/User';
 import UserLikes from './views/UserLikes';
 import UserPosts from './views/UserPosts';
 import SingleUser from './views/SingleUser';
+import EditUser from './views/EditUser';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -65,6 +66,7 @@ function App() {
           <Route path='/user/liked-posts' element={user && appState.userData && <Authenticated><UserLikes /></Authenticated>} />
           <Route path='/user/my-posts' element={user && appState.userData && <Authenticated><UserPosts author={appState.userData?.handle} /></Authenticated>} />
           <Route path='/single-user/:handle' element={user && appState.userData && <SingleUser />} />
+          <Route path='/user/edit' element={user && appState.userData && <Authenticated><EditUser /></Authenticated>} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
