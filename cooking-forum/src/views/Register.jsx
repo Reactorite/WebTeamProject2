@@ -20,6 +20,8 @@ export default function Register() {
     profilePictureURL: null,
   });
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [secretKey, setSecretKey] = useState('');
+  const [secretKeyMessage, setSecretKeyMessage] = useState('');
   const { setAppState } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -31,6 +33,18 @@ export default function Register() {
 
     if (prop === 'password' || prop === 'repeatPassword') {
       setPasswordsMatch(user.password === e.target.value || user.repeatPassword === e.target.value);
+    }
+  };
+
+  const updateSecretKey = e => {
+    const key = e.target.value;
+    setSecretKey(key);
+
+    if (key === '123456') {
+      setSecretKeyMessage('✅ Secret key matched!');
+      setUser(prev => ({ ...prev, isOwner: true }));
+    } else {
+      setSecretKeyMessage('❌ Secret key not matched');
     }
   };
 
@@ -51,6 +65,10 @@ export default function Register() {
       return alert(`Last name must be at least ${MIN_NAME_LENGTH} characters long and max ${MAX_NAME_LENGTH}`);
     }
 
+    if (secretKey !== '123456') {
+      return alert('Secret key is incorrect!');
+    }
+
     try {
       const userExists = false;
       if (userExists) {
@@ -58,7 +76,7 @@ export default function Register() {
       }
       const credential = await registerUser(user.email, user.password);
       await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked, user.isOwner, user.profilePictureURL || 'https://static.independent.co.uk/2022/06/28/10/anonymous%20terra%20luna%20crypto.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp'); 
-      setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString() } }));
+      setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString(), isOwner: user.isOwner } }));
       navigate('/');
     } catch (error) {
       alert(error.message);
@@ -88,7 +106,13 @@ export default function Register() {
         </span>
       )}
       <br />
+      <label htmlFor="secretKey">Secret Key: </label>
+      <input value={secretKey} onChange={updateSecretKey} type="text" name="secretKey" id="secretKey" />
+      <span style={{ color: secretKeyMessage.startsWith('✅') ? 'green' : 'red' }}>
+        {secretKeyMessage}
+      </span>
+      <br />
       <button onClick={register}>Register</button>
     </>
-  )
+  );
 }

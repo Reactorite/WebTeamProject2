@@ -12,6 +12,7 @@ export default function User() {
   const [profilePictureURL, setProfilePictureURL] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [isOwner, setIsOwner] = useState(false); 
 
   useEffect(() => {
     if (userData && userData.handle) {
@@ -19,10 +20,12 @@ export default function User() {
 
       const unsubscribeUser = onValue(userRef, (snapshot) => {
         const data = snapshot.val();
+
         if (data) {
           setProfilePictureURL(data.profilePictureURL || '');
           setFirstName(data.firstName || '');
           setLastName(data.lastName || '');
+          setIsOwner(data.isOwner || false); 
         }
       });
 
@@ -59,7 +62,7 @@ export default function User() {
     return <div>Loading...</div>;
   }
 
-  const { createdOn, handle, isAdmin, isBlocked, isOwner } = userData;
+  const { createdOn, handle, isAdmin, isBlocked } = userData;
 
   return (
     <div>
