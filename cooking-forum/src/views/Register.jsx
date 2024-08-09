@@ -57,7 +57,7 @@ export default function Register() {
         return alert(`User {${user.handle}} already exists!`);
       }
       const credential = await registerUser(user.email, user.password);
-      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked, user.isOwner, user.profilePictureURL || 'https://static.independent.co.uk/2022/06/28/10/anonymous%20terra%20luna%20crypto.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp'); 
+      await createUserHandle(user.handle, credential.user.uid, user.firstName, user.lastName, user.email, user.isAdmin, user.isBlocked, user.isOwner, user.profilePictureURL || 'https://static.independent.co.uk/2022/06/28/10/anonymous%20terra%20luna%20crypto.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp');
       setAppState(prev => ({ ...prev, user: credential.user, userData: { handle: user.handle, createdOn: new Date().toISOString() } }));
       navigate('/');
     } catch (error) {
@@ -67,28 +67,42 @@ export default function Register() {
 
   return (
     <>
-      <div className="header">
-        <h1>Register</h1>
-      </div>
-      <label htmlFor="handle">Username: </label>
-      <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" id="handle" /><br /><br />
-      <label htmlFor="email">Email: </label>
-      <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" /><br /><br />
-      <label htmlFor="firstName">First name: </label>
-      <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" id="firstName" /><br /><br />
-      <label htmlFor="lastName">Last name: </label>
-      <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
-      <label htmlFor="password">Password: </label>
-      <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br /><br />
-      <label htmlFor="repeatPassword">Repeat Password: </label>
-      <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" />
-      {user.repeatPassword && (
-        <span style={{ color: passwordsMatch ? 'green' : 'red' }}>
-          {passwordsMatch ? '✅ Passwords match!' : '❌ Passwords do not match!'}
-        </span>
-      )}
-      <br />
-      <button onClick={register}>Register</button>
+      <form>
+        <div className="register-header">
+          <h1>Register</h1>
+        </div>
+        <div className="form-group">
+          <label className="input-name" htmlFor="handle">Username: </label>
+          <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" id="handle" /><br /><br />
+        </div>
+        <div className="form-group">
+          <label className="input-name" htmlFor="email">Email: </label>
+          <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" /><br /><br />
+        </div>
+        <div className="form-group">
+          <label className="input-name" htmlFor="firstName">First name: </label>
+          <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" id="firstName" /><br /><br />
+        </div>
+        <div className="form-group">
+          <label className="input-name" htmlFor="lastName">Last name: </label>
+          <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
+        </div>
+        <div className="form-group">
+          <label className="input-name" htmlFor="password">Password: </label>
+          <input className="input" value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br /><br />
+        </div>
+        <div className="form-group">
+          <label className="input-name" htmlFor="repeatPassword">Repeat Password: </label>
+          <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" />
+          {user.repeatPassword && (
+            <span style={{ color: passwordsMatch ? 'green' : 'red' }}>
+              {passwordsMatch ? <span className="password-check"> Passwords match!</span> : <span className="password-x"> Passwords do not match!</span>}
+            </span>
+          )}
+        </div>
+        <br />
+        <button className="register-button" role="button" onClick={register}><span className="text">Register</span></button>
+      </form>
     </>
   )
 }
