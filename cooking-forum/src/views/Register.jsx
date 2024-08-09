@@ -81,7 +81,6 @@ export default function Register() {
 
   return (
     <>
-      <form>
         <div className="register-header">
           <h1>Register</h1>
         </div>
@@ -124,7 +123,6 @@ export default function Register() {
         </div>
         <br />
         <button className="register-button" role="button" onClick={register}><span className="text">Register</span></button>
-      </form>
     </>
   );
 }

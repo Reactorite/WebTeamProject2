@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { AppContext } from "../state/app.context";
 import { updateUserProfile } from "../services/users.service"; 
 import { useNavigate } from "react-router-dom";
+import './Styles/EditUser.css'; // Подключете CSS файла
 
 export default function EditUser() {
   const { userData, setAppState } = useContext(AppContext);
@@ -42,9 +43,9 @@ export default function EditUser() {
   };
 
   return (
-    <div>
+    <div className="edit-user-container">
       <h1>Edit Profile</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="edit-user-form">
         <label htmlFor="firstName">First Name:</label>
         <input
           id="firstName"
@@ -52,7 +53,6 @@ export default function EditUser() {
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
-        <br />
         <label htmlFor="lastName">Last Name:</label>
         <input
           id="lastName"
@@ -60,7 +60,6 @@ export default function EditUser() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-        <br />
         <label htmlFor="profilePicture">Profile Picture:</label>
         <input
           id="profilePicture"
@@ -68,18 +67,15 @@ export default function EditUser() {
           accept="image/*"
           onChange={handleFileChange}
         />
-        <br />
         {previewImage && (
-          <div>
+          <div className="preview-container">
             <p>Profile Picture Preview:</p>
             <img
               src={previewImage}
               alt="Profile Preview"
-              style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
             />
           </div>
         )}
-        <br />
         <button type="submit">Save Changes</button>
       </form>
     </div>

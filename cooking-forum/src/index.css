@@ -33,6 +33,7 @@ nav > a.active {
 }
 
 body {
+  background-color: blanchedalmond;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;

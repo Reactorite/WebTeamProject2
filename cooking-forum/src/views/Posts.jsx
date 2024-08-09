@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getAllPosts, likePostCount } from "../services/posts.service";
 import RecentPosts from "./RecentPosts";
+import { getUserByHandle } from "../services/users.service";
+import './Styles/Posts.css'
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -26,49 +28,68 @@ export default function Posts() {
   }, []);
 
   useEffect(() => {
-    let updatedPosts = [...posts];
+    const fetchFilteredPosts = async () => {
+      let updatedPosts = [...posts];
 
-    if (filter) {
-      updatedPosts = updatedPosts.filter(post =>
-        post.author.toLowerCase().includes(filter.toLowerCase())
-      );
-    }
+      if (filter) {
+        updatedPosts = updatedPosts.filter(post =>
+          post.author.toLowerCase().includes(filter.toLowerCase())
+        );
+      }
 
-    if (sortOption === "date") {
-      updatedPosts.sort((a, b) => new Date(a.createdOn) - new Date(b.createdOn));
-    } else if (sortOption === "likes") {
-      updatedPosts.sort((a, b) => b.likeCount - a.likeCount);
-    }
+      if (sortOption === "date") {
+        updatedPosts.sort((a, b) => new Date(a.createdOn) - new Date(b.createdOn));
+      } else if (sortOption === "likes") {
+        updatedPosts.sort((a, b) => b.likeCount - a.likeCount);
+      }
 
-    setFilteredPosts(updatedPosts);
+      const postsWithProfiles = await Promise.all(updatedPosts.map(async (post) => {
+        const userProfile = await getUserByHandle(post.author);
+        const authorProfile = {
+          profilePictureURL: userProfile.profilePictureURL || '',
+          firstName: userProfile.firstName || '',
+          lastName: userProfile.lastName || '',
+          isAdmin: userProfile.isAdmin || false,
+          isOwner: userProfile.isOwner || false,
+          isBlocked: userProfile.isBlocked || false,
+        };
+        return { ...post, authorProfile };
+      }));
+
+      setFilteredPosts(postsWithProfiles);
+    };
+
+    fetchFilteredPosts();
   }, [posts, filter, sortOption]);
 
   return (
-    <div>
+    <div className="posts-container">
       <h1>Posts:</h1>
-      <div>
-        <label htmlFor="filter">Filter by author:</label>
-        <input
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          type="text"
-          name="filter"
-          id="filter"
-        />
+      <div className="filter-sort-container">
+        <div className="filter-container">
+          <label htmlFor="filter">Filter by author:</label>
+          <input
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            type="text"
+            name="filter"
+            id="filter"
+          />
+        </div>
+        <div className="sort-container">
+          <label htmlFor="sort">Sort by:</label>
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            name="sort"
+            id="sort"
+          >
+            <option value="date">Date</option>
+            <option value="likes">Likes</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label htmlFor="sort">Sort by:</label>
-        <select
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-          name="sort"
-          id="sort"
-        >
-          <option value="date">Date</option>
-          <option value="likes">Likes</option>
-        </select>
-      </div>
-      <div>
+      <div className="posts-list">
         {filteredPosts.length > 0
           ? filteredPosts.map((p) => (
               <RecentPosts
@@ -80,6 +101,7 @@ export default function Posts() {
                 createdOn={p.createdOn}
                 likeCount={p.likeCount}
                 commentsCounter={p.commentsCounter}
+                authorProfile={p.authorProfile} 
               />
             ))
           : "No Posts"}

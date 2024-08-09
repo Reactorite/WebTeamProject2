@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { onValue, ref } from "firebase/database";
 import { db } from "../config/firebase-config";
 import { getAllPosts } from "../services/posts.service";
+import './Styles/User.css'; 
 
 export default function User() {
   const { userData } = useContext(AppContext);
@@ -64,27 +65,35 @@ export default function User() {
 
   const { createdOn, handle, isAdmin, isBlocked } = userData;
 
+  const rankClass = isAdmin ? 'rank-admin' : isOwner ? 'rank-owner' : 'rank-user';
+
+  const statusClass = isBlocked ? 'status-blocked' : 'status-active';
+
   return (
-    <div>
+    <div className="user-container">
       <h2>Username: {handle}</h2>
-      {profilePictureURL ? (
-        <div>
+      <div className="profile-picture">
+        {profilePictureURL ? (
           <a href={profilePictureURL} target="_blank" rel="noopener noreferrer">
-            <img src={profilePictureURL} alt={`${handle}'s profile`} style={{ width: 100, height: 100, borderRadius: '75%' }} />
+            <img src={profilePictureURL} alt={`${handle}'s profile`} />
           </a>
-        </div>
-      ) : (
-        <p>No profile picture available</p>
-      )}
-      <p>First name: {firstName}</p>
-      <p>Last name: {lastName}</p>
-      <p>Rank: {isAdmin ? "Admin" : isOwner ? "Owner" : "User"}</p>
-      <p>Status: {isBlocked ? "Blocked" : "Active"}</p>
-      <NavLink to="/user/my-posts">My Posts: {userPosts.length}</NavLink><br />
-      <NavLink to="/user/liked-posts">Liked Posts: {likedPosts}</NavLink>
-      <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p>
+        ) : (
+          <p>No profile picture available</p>
+        )}
+      </div>
+      <div className="user-info">
+        <p>First name: {firstName}</p>
+        <p>Last name: {lastName}</p>
+        <p>Rank: <span className={rankClass}>{isAdmin ? "Admin" : isOwner ? "Owner" : "User"}</span></p>
+        <p>Status: <span className={statusClass}>{isBlocked ? "Blocked" : "Active"}</span></p>
+        <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p>
+      </div>
+      <div className="user-links">
+        <NavLink to="/user/my-posts">My Posts: {userPosts.length}</NavLink>
+        <NavLink to="/user/liked-posts">Liked Posts: {likedPosts}</NavLink>
+      </div>
       <NavLink to="/user/edit">
-        <button>Edit Profile</button>
+        <button className="edit-profile-button">Edit Profile</button>
       </NavLink>
     </div>
   );

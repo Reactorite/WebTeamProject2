@@ -1,0 +1,104 @@
+.post-container {
+    display: flex;
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+
+.left-section {
+    width: 220px; 
+    padding-right: 15px;
+    border-right: 1px solid #ddd; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff; 
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px; 
+}
+
+
+.author-profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+
+.default-profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+
+.author-details p {
+    margin: 3px 0; 
+    text-align: center;
+}
+
+
+.rank-admin {
+    color: #00ff00; 
+}
+
+.rank-owner {
+    color: #c71585; 
+}
+
+.rank-user {
+    color: #808080; 
+}
+
+
+.status-blocked {
+    color: #ff0000;
+}
+
+.status-active {
+    color: #00ff00; 
+}
+
+
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.post-content h3 {
+    text-align: center;
+    margin: 0 0 15px;
+    font-size: 24px;
+}
+
+
+.post-content p {
+    margin: 5px 0;
+}
+
+.post-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto; 
+    font-size: 14px;
+    color: #555;
+}

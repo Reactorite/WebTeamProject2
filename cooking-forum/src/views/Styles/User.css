@@ -1,0 +1,88 @@
+/* Основен контейнер за потребителската страница */
+.user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Центриране на текста */
+    padding: 20px;
+    max-width: 800px; /* Ограничаване на ширината */
+    margin: 0 auto; /* Центриране на контейнера в центъра на екрана */
+    background-color: #f9f9f9; /* Лек фон за по-добра видимост */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лека сянка */
+}
+
+/* Снимка на профила */
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+/* Информация за потребителя */
+.user-info p {
+    margin: 5px 0;
+}
+
+/* Стилове за ранга */
+.rank-admin {
+    color: #00ff00; /* Неоново зелено */
+    font-weight: bold; /* Увеличава видимостта */
+}
+
+.rank-owner {
+    color: #c71585; /* Неоново лилаво */
+    font-weight: bold; /* Увеличава видимостта */
+}
+
+.rank-user {
+    color: #808080; /* Сив */
+    font-weight: bold; /* Увеличава видимостта */
+}
+
+/* Стилове за статуса */
+.status-blocked {
+    color: #ff0000; /* Червен */
+    font-weight: bold; /* Увеличава видимостта */
+}
+
+.status-active {
+    color: #00ff00; /* Зелен */
+    font-weight: bold; /* Увеличава видимостта */
+}
+
+/* Стилове за връзките */
+.user-links {
+    margin-top: 20px;
+}
+
+.user-links a {
+    display: block;
+    margin: 10px 0;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.user-links a:hover {
+    text-decoration: underline;
+}
+
+/* Стилове за бутона за редактиране на профила */
+.edit-profile-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-profile-button:hover {
+    background-color: #0056b3;
+}

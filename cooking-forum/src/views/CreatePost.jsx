@@ -4,6 +4,7 @@ import { AppContext } from '../state/app.context'
 import { MAX_CONTENT_LENGTH, MAX_TITLE_LENGTH, MIN_CONTENT_LENGTH, MIN_TITLE_LENGTH } from "../constants/constants";
 import Modal from "../components/Modal/Modal";
 import { useNavigate } from "react-router-dom";
+import './Styles/CreatePost.css'
 
 export default function CreatePost() {
   const [post, setPost] = useState({
@@ -43,21 +44,46 @@ export default function CreatePost() {
   };
 
   return (
-    <div>
-      <h1>Create post</h1>
-      <label htmlFor="title">Title: </label>
-      <input value={post.title} onChange={e => updatePost('title', e.target.value)} type="text" name="title" id="title" /><br />
-      <label htmlFor="content">Content: </label>
-      <textarea value={post.content} onChange={e => updatePost('content', e.target.value)} name="content" id="content" /><br /><br />
-      <button onClick={handleCreatePost}>Create</button>
+    <div className="create-post-container">
+      <h1 className="create-post-title">Create Post</h1>
+      <div className="create-post-form">
+        <label htmlFor="title" className="create-post-label">
+          Title:
+        </label>
+        <input
+          value={post.title}
+          onChange={(e) => updatePost("title", e.target.value)}
+          type="text"
+          name="title"
+          id="title"
+          className="create-post-input"
+        />
+        <br />
+        <label htmlFor="content" className="create-post-label">
+          Content:
+        </label>
+        <textarea
+          value={post.content}
+          onChange={(e) => updatePost("content", e.target.value)}
+          name="content"
+          id="content"
+          className="create-post-textarea"
+        />
+        <br />
+        <br />
+        <button onClick={handleCreatePost} className="create-post-button">
+          Create
+        </button>
+      </div>
       <Modal
         isOpen={modalOpen}
         onClose={() => {
           setModalOpen(false);
-          navigate('/');
+          navigate("/");
         }}
         title="Notification"
-        message={modalMessage} />
+        message={modalMessage}
+      />
     </div>
-  )
+  );
 }

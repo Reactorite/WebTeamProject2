@@ -1,107 +1,176 @@
-.header {
-    color: rgb(40, 125, 200);
+/* Основен стил за хедъра */
+header {
+    background-color: transparent; /* Прозрачен фон */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лека сянка */
+    padding: 15px 30px;
     display: flex;
-    justify-content: space-between;
-}
-
-div > h1 {
-    margin-left: 10px;
-    margin-right: 0;
-}
-
-div > h4 {
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* За позициониране на Search компонентата */
+  }
+  
+  /* Основен стил за съдържанието на хедъра */
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .header-content h1 {
+    font-size: 32px;
+    color: #003366; /* Тъмен син */
+    margin: 0;
+    font-weight: 600;
+  }
+  
+  .header-content h4 {
     font-weight: 400;
-    margin-top: 39px;
-    text-align: right;
-    margin-right: 10px;
-}
-
-.header > h1 img.reactLogo {
-    margin-left: -5px;
-}
-
-.underLine1 {
-    height: 5px;
-    background-color: rgb(40, 125, 200);
-    border: none;
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-top: -30px;
-}
-
-.underLine2 {
-    height: 5px;
-    background-color: rgb(40, 125, 200);
-    border: none;
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-top: 1px;
-}
-
-.reactLogo {
-    height: 25px;
+    color: #666; /* Сив */
+    margin-left: 20px;
+  }
+  
+  /* Лого на React */
+  .reactLogo {
+    height: 35px;
     width: auto;
-    align-content: left;
-    margin-bottom: -1px;
-    /* margin-left: 0px; */
-}
-
-.nav {
-    display: flex;
-    justify-content:initial;
-    align-items: center; /* Center items vertically */
-    padding: 0;
-    margin-top: -38px;
-    margin-bottom: -33px;
-}
-
-.nav-right {
-    display: flex;
-    /* margin-right: 20px; */
-    /* align-items: right; */
-    /* padding: 0; */
-    /* margin: 0; */
-    margin-left: 650px;
-    margin-top: -9px;
-    margin-bottom: 10px;
-    /* align-content: right; */
-}
-
-/* #users { */
-    /* align-items: right; */
-    /* margin-left: 20px; */
-    /* padding: 0; */
-    /* margin: 0; */
-/* } */
+    margin-left: 15px;
+  }
   
-/* #posts { */
-    /* align-items: right; */
-    /* margin-left: 1000px; */
-    /* padding: 0; */
-    /* margin-left: 0; */
-/* } */
-
-  /* .nav-right > * {
-    margin-: 20px;
-  } */
+  /* Навигационен стил */
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 15px; /* Разстояние от Search компонентата */
+  }
   
-
-/* #login {
+  /* Стилове за бутоните */
+  .nav-button {
+    background: none;
+    border: 2px solid #003366; /* Тъмен син */
+    color: #003366; /* Тъмен син */
+    font-size: 16px;
+    margin: 15px;
+    padding: 8px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .nav-button:hover {
+    background-color: #003366; /* Тъмен син */
+    color: #ffffff; /* Бяло */
+  }
+  
+  /* Стилизира изображението на профила */
+  .profilePicture {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    margin-left: 15px;
+  }
+  
+  /* Стилизира контейнера на Search компонентата */
+  .search-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Разстояние между навигационната лента и Search компонентата */
+  }
+  
+  .search-container {
+    background: #ffffff; /* Чисто бяло */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лека сянка */
+    border-radius: 8px; /* Овални ъгли */
+    padding: 10px;
+    width: 100%; /* Ширина на контейнера */
+    max-width: 800px; /* Максимална ширина на контейнера (по желание) */
+    display: block; /* Винаги показан */
+  }
+  
+  /* Стилизира резултатите от търсенето */
+  .search-results {
+    margin-top: 20px;
+  }
+  
+  .search-results div {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Лека линия за разделяне на резултатите */
+  }
+  
+  .search-results div:last-child {
+    border-bottom: none; /* Премахва долната линия за последния елемент */
+  }
+  
+  .search-results h3 {
+    font-size: 18px;
+    color: #003366; /* Тъмен син */
     margin: 0;
-    padding: 0;
-}
-
-#register {
-    margin: 0;
-    padding: 0;
-}
-
-#logout {
-    margin: 0;
-    padding: 0;
-}
-
-#user {
-    margin: 0;
-    padding: 0;
-} */
+  }
+  
+  .search-results p {
+    margin: 5px 0;
+    color: #555; /* По-светъл сив за текста */
+  }
+  
+  .search-results a {
+    color: #003366; /* Тъмен син */
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .search-results a:hover {
+    color: #00509e; /* Светло син при ховър */
+  }
+  
+  /* Цветова схема за тъмен режим */
+  @media (prefers-color-scheme: dark) {
+    header {
+      background-color: rgba(0, 0, 0, 0.7); /* Прозрачен черен фон */
+    }
+  
+    .header-content h1, .header-content h4, .nav-button {
+      color: #ffffff; /* Бял текст за тъмен режим */
+    }
+  
+    .search-container {
+      background: rgba(0, 0, 0, 0.8); /* Прозрачен черен фон за контейнера на Search */
+    }
+  
+    .search-results h3, .search-results p, .search-results a {
+      color: #ffffff; /* Бял текст за резултатите от търсенето */
+    }
+  
+    .search-results a:hover {
+      color: #aad4ff; /* Светло син при ховър за тъмен режим */
+    }
+  }
+  
+  /* Цветова схема за светъл режим */
+  @media (prefers-color-scheme: light) {
+    header {
+      background-color: rgba(255, 255, 255, 0.9); /* Леко прозрачен бял фон */
+    }
+  
+    .header-content h1, .header-content h4, .nav-button {
+      color: #003366; /* Тъмен син текст за светъл режим */
+    }
+  
+    .search-container {
+      background: #ffffff; /* Чисто бял фон за контейнера на Search */
+    }
+  
+    .search-results h3, .search-results p, .search-results a {
+      color: #333333; /* Тъмен текст за резултатите от търсенето */
+    }
+  
+    .search-results a:hover {
+      color: #00509e; /* Светло син при ховър за светъл режим */
+    }
+  }
+  

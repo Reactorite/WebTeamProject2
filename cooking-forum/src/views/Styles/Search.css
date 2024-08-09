@@ -1,0 +1,90 @@
+
+.search-container {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+
+  .search-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  
+  .search-controls input,
+  .search-controls select,
+  .search-controls button {
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+
+  .search-controls button {
+    border: 2px solid #003366; 
+    background: none;
+    color: #003366; 
+    cursor: pointer;
+    border-radius: 25px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .search-controls button:hover {
+    background-color: #003366; 
+    color: #ffffff; 
+  }
+  
+
+  .clear-button {
+    background-color: #f5f5f5; 
+    color: #333;
+  }
+  
+  .clear-button:hover {
+    background-color: #ddd; 
+  }
+  
+
+  .search-results-container {
+    width: 100%;
+    max-width: 800px;
+    max-height: 400px; 
+    overflow-y: auto; 
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    padding: 10px; 
+  }
+  
+
+  .search-results div {
+    padding: 10px;
+  }
+  
+  .search-results div:last-child {
+    border-bottom: none; 
+  }
+  
+  .search-results h3 {
+    font-size: 18px;
+    color: #003366; 
+    margin: 0;
+  }
+  
+  .search-results p {
+    margin: 5px 0;
+    color: #555; 
+  }
+  
+  .search-results a {
+    color: #003366; 
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .search-results a:hover {
+    color: #00509e; 
+  }
+  
