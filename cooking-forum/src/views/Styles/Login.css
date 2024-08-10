@@ -3,8 +3,8 @@
   flex-direction: column;
   align-items: center;
   color: rgb(40, 125, 200);
-  border: rgb(40, 125, 200) 2px solid;
-  box-shadow: 0 0 1px rgb(40, 125, 200), 0 0 2px rgb(40, 125, 200), 0 0 3px rgb(40, 125, 200), 0 0 4px rgb(40, 125, 200), 0 0 5px rgb(40, 125, 200), 0 0 6px rgb(40, 125, 200), 0 0 7px rgb(40, 125, 200);
+  border: rgba(152, 65, 252, 0.51) 2px solid;
+  box-shadow: rgba(152, 65, 252, 0.574) 0px 15px 40px 0px;
   max-width: 400px;
   padding-bottom: 40px;
   margin-left: 30%;
