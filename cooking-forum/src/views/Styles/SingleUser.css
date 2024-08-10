@@ -1,0 +1,85 @@
+.user-profile-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+.user-profile-container h1 {
+    margin-bottom: 20px;
+}
+
+
+.user-profile-picture img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+
+.user-profile-info p {
+    margin: 5px 0;
+}
+
+
+.user-profile-actions button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.user-profile-actions button:hover {
+    background-color: #0056b3;
+}
+
+.user-profile-actions button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+.user-posts {
+    margin-top: 30px;
+}
+
+.user-posts h2 {
+    margin-bottom: 20px;
+}
+
+.user-posts .no-posts {
+    font-size: 18px;
+    color: #777;
+}
+
+
+.rank-admin {
+    color: #00ff00; 
+}
+
+.rank-owner {
+    color: #c71585;
+}
+
+.rank-user {
+    color: #808080;
+}
+
+.status-blocked {
+    color: #ff0000; 
+}
+
+.status-active {
+    color: #00ff00; 
+}

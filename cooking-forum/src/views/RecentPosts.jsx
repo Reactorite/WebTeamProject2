@@ -57,11 +57,12 @@ const RecentPosts = ({ id, author, title, content, createdOn, likeCount, comment
                         <div className="default-profile-picture">No Picture</div>
                     )}
                     <div className="author-details">
-                        <p><strong>Created by:</strong> <NavLink to={`/single-user/${author}`}>{author}</NavLink></p>
-                        <p><strong>First Name:</strong> {firstName}</p>
-                        <p><strong>Last Name:</strong> {lastName}</p>
+                        <p><strong>Username:</strong> <NavLink to={`/single-user/${author}`}>{author}</NavLink></p>
+                        {/* <p><strong>First Name:</strong> {firstName}</p>
+                        <p><strong>Last Name:</strong> {lastName}</p> */}
                         <p><strong>Rank:</strong> <span className={rankClass}>{rank}</span></p>
                         <p><strong>Status:</strong> <span className={statusClass}>{status}</span></p>
+                        <p><strong>Join Date: {new Date(createdOn).toLocaleDateString()}</strong></p>
                     </div>
                 </div>
             </div>
