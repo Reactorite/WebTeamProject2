@@ -8,9 +8,9 @@ export default function Modal({ isOpen, onClose, title, message }) {
     <div className="modal">
       <div className='overlay'>
         <div className="modal-content">
-          <h2>{title}</h2>
-          <p>{message}</p>
-          <button onClick={onClose}>Close</button>
+          <h2 className='modal-text'>{title}</h2>
+          <p className='modal-text' id='modal-text-p'>{message}</p>
+          <button className='modal-btn' onClick={onClose}><span className='text'>Close</span></button>
         </div>
       </div>
     </div>
