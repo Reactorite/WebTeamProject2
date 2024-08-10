@@ -88,23 +88,23 @@ export default function Register() {
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="handle">Username: </label>
-          <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" id="handle" /><br /><br />
+          <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" /*id="handle"*/ /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="email">Email: </label>
-          <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" /><br /><br />
+          <input value={user.email} onChange={updateUser('email')} type="text" name="email" /*id="email"*/ /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="firstName">First name: </label>
-          <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" id="firstName" /><br /><br />
+          <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" /*id="firstName"*/ /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="lastName">Last name: </label>
-          <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
+          <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" /*id="lastName"*/ /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="password">Password: </label>
-          <input className="input" value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br /><br />
+          <input className="input" value={user.password} onChange={updateUser('password')} type="password" name="password" /*id="password"*/ /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="repeatPassword">Repeat Password: </label>
@@ -118,7 +118,7 @@ export default function Register() {
         <br />
         <div className="form-group">
           <label className="input-name" htmlFor="secretKey">Secret Key: </label>
-          <input value={secretKey} onChange={updateSecretKey} type="password" name="secretKey" id="secretKey" />
+          <input value={secretKey} onChange={updateSecretKey} type="password" name="secretKey" /*id="secretKey"*/ />
           {secretKey.length === 0 ? null : secretKeyMessage.startsWith('✅')
             ? <span className="password-check"> Secret key matched!</span>
             : <span className="password-x"> Secret key not matched!</span>}

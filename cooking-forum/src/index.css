@@ -29,7 +29,10 @@ nav > a {
 
 nav > a.active {
   padding-left: 10px;
-  color: red;
+  color: rgb(83, 171, 249);
+  font-size: 20px;
+  padding-bottom: 6px;
+  transition: color 0.3s ease, font-size 0.3s ease, padding-bottom 0.3s ease;
 }
 
 body {
