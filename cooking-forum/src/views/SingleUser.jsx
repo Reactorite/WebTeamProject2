@@ -5,6 +5,7 @@ import RecentPosts from "./RecentPosts";
 import { getAllPosts, likePostCount } from "../services/posts.service";
 import { AppContext } from "../state/app.context";
 import Modal from "../components/Modal/Modal";
+import './Styles/SingleUser.css'; 
 
 export default function SingleUser() {
   const { userData } = useContext(AppContext);
@@ -99,42 +100,48 @@ export default function SingleUser() {
   const { isOwner } = userData;
 
   return (
-    <div>
+    <div className="user-profile-container">
       <h1>{handle}</h1>
       {profilePictureURL && (
-        <div>
+        <div className="user-profile-picture">
           <img
             src={profilePictureURL}
             alt={`${handle}'s profile`}
-            style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
           />
         </div>
       )}
-      <p>Rank: {isAdmin ? "Admin" : user.isOwner ? "Owner" : "User"}</p>
-      <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p><br />
-      {!user.isAdmin && !user.isOwner && (isOwner && !isAdmin) ? (
-        <button onClick={() => handleMakeAdmin(handle)}>Promote</button>
-      ) : (isOwner && isAdmin) ? (
-        <button onClick={() => handleDemoteAdmin(handle)}>Demote</button>
-      ) : null}
-      {!isAdmin && !user.isOwner && (isOwner || userData.isAdmin) && !isBlocked ? (
-        <button onClick={() => handleBlockUser(handle)}>Block</button>
-      ) : !isAdmin && (isOwner || userData.isAdmin) && isBlocked ? (
-        <button onClick={() => handleUnblockUser(handle)}>Unblock</button>
-      ) : null}
-      <h2>{handle}&apos;s posts</h2>
-      {posts.length > 0 && posts.map(p =>
-        <RecentPosts
-          key={p.id}
-          id={p.id}
-          author={p.author}
-          title={p.title}
-          content={p.content}
-          createdOn={p.createdOn}
-          likeCount={p.likeCount}
-          commentsCounter={p.commentsCounter}
-        />
-      )}
+      <div className="user-profile-info">
+        <p>Rank: <span className={isAdmin ? "rank-admin" : user.isOwner ? "rank-owner" : "rank-user"}>{isAdmin ? "Admin" : user.isOwner ? "Owner" : "User"}</span></p>
+        <p>Status: <span className={isBlocked ? "status-blocked" : "status-active"}>{isBlocked ? "Blocked" : "Active"}</span></p>
+        <p>Join Date: {new Date(createdOn).toLocaleDateString()}</p>
+      </div>
+      <div className="user-profile-actions">
+        {!user.isAdmin && !user.isOwner && (isOwner && !isAdmin) ? (
+          <button onClick={() => handleMakeAdmin(handle)}>Promote</button>
+        ) : (isOwner && isAdmin) ? (
+          <button onClick={() => handleDemoteAdmin(handle)}>Demote</button>
+        ) : null}
+        {!isAdmin && !user.isOwner && (isOwner || userData.isAdmin) && !isBlocked ? (
+          <button onClick={() => handleBlockUser(handle)}>Block</button>
+        ) : !isAdmin && (isOwner || userData.isAdmin) && isBlocked ? (
+          <button onClick={() => handleUnblockUser(handle)}>Unblock</button>
+        ) : null}
+      </div>
+      <div className="user-posts">
+        <h2>{handle}&apos;s Posts</h2>
+        {posts.length > 0 ? posts.map(p =>
+          <RecentPosts
+            key={p.id}
+            id={p.id}
+            author={p.author}
+            title={p.title}
+            content={p.content}
+            createdOn={p.createdOn}
+            likeCount={p.likeCount}
+            commentsCounter={p.commentsCounter}
+          />
+        ) : <div className="no-posts">No posts yet</div>}
+      </div>
       <Modal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
