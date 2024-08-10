@@ -111,7 +111,7 @@ export default function Register() {
           <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" />
           {user.repeatPassword && (
             <span style={{ color: passwordsMatch ? 'green' : 'red' }}>
-              {passwordsMatch ? <span className="password-check"> Passwords match!</span> : <span className="password-x"> Passwords do not match!</span>}
+              {passwordsMatch ? <span className="password-check"></span> : <span className="password-x"></span>}
             </span>
           )}
         </div>
@@ -120,8 +120,8 @@ export default function Register() {
           <label className="input-name" htmlFor="secretKey">Secret Key: </label>
           <input value={secretKey} onChange={updateSecretKey} type="password" name="secretKey" /*id="secretKey"*/ />
           {secretKey.length === 0 ? null : secretKeyMessage.startsWith('✅')
-            ? <span className="password-check"> Secret key matched!</span>
-            : <span className="password-x"> Secret key not matched!</span>}
+            ? <span className="password-check"></span>
+            : <span className="password-x"></span>}
         </div>
         <br />
         <button id="reg-btn" className="register-button" role="button" onClick={register}><span className="text">Register</span></button>

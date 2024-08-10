@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    /* padding-right: 20px; */
     /* margin-bottom: 5px; */
   }
 
@@ -45,7 +46,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 20px;
+    padding-left: 30%;
     background-image: linear-gradient(to bottom right, #AF40FF, #5B42F3 50%,#00DDEB);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -101,6 +102,7 @@
 }
 
 .password-check {
+    position: relative;
     padding-left: 10px;
     color: rgb(47, 238, 47);
     text-shadow: 0 0 0px rgb(47, 238, 47), 0 0 0px rgb(47, 238, 47), 0 0 3px rgb(47, 238, 47), 0 0 4px rgb(47, 238, 47);
@@ -108,9 +110,14 @@
 
 .password-check::before {
     content: "✔";
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 10px;
 }
 
 .password-x {
+    position: relative;
     padding-left: 10px;
     color: rgb(255, 0, 0);
     text-shadow: 0 0 0px rgb(255, 0, 0), 0 0 0px rgb(255, 0, 0), 0 0 3px rgb(255, 0, 0), 0 0 4px rgb(255, 0, 0);
@@ -118,10 +125,21 @@
 
 .password-x::before {
     content: "✘";
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 10px;
 }
 
-/* .register-container {
+.register-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-} */
+    border: rgba(152, 65, 252, 0.51) 2px solid;
+    box-shadow: rgba(152, 65, 252, 0.574) 0 15px 30px -5px;
+    max-width: 400px;
+    padding-bottom: 40px;
+    margin-left: 30%;
+    margin-top: 25px;
+    border-radius: 10px;
+}

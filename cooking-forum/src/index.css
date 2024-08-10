@@ -84,3 +84,7 @@ button:focus-visible {
     background-color: transparent;
   }
 }
+
+footer {
+  color: rgb(40, 125, 200);
+}
