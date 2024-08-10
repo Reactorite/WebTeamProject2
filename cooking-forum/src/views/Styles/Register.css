@@ -35,7 +35,7 @@
   }
 
   input {
-    border: #ffffff95;
+    border: #b0b0b095 1px solid;
     background-color: #ffffffbd;
     border-radius: 5px;
     color: black;
@@ -74,6 +74,7 @@
   touch-action: manipulation;
   white-space: nowrap;
   cursor: pointer;
+  margin-left: 26%;
 }
 
 .register-button:active,
