@@ -1,6 +1,7 @@
 .posts-container {
     padding: 20px;
-    background-color: #ffffff; 
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .filter-sort-container {
@@ -20,9 +21,9 @@
     font-size: 18px; 
     border: 2px solid #007BFF; 
     border-radius: 5px; 
-    background-color: #ffffff; 
-    width: 300px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    background-color: #ffffff;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 

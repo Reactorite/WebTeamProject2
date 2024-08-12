@@ -78,7 +78,7 @@ export default function Search() {
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search..."
         />
-        <select value={type} onChange={handleTypeChange}>
+        <select value={type} onChange={handleTypeChange} className="search-selector">
           <option value="posts">Posts</option>
           <option value="comments">Comments</option>
           {(isAdmin || isOwner) && <option value="users">Users</option>}
