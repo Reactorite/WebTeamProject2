@@ -5,7 +5,21 @@ import './Styles/Home.css'; // Импортирайте CSS файла
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-  const [activeSection, setActiveSection] = useState(null); // Няма активна секция по подразбиране
+  const [activeSection, setActiveSection] = useState(null);
+  const [currentParagraph, setCurrentParagraph] = useState(0);
+
+  const paragraphs = [
+    "Here you can ask questions, give answers or just search for content from like-minded people who share the same interest as you!",
+    "Enjoy our forum and always be kind and respectful to other users."
+  ];
+
+  const handleNext = () => {
+    setCurrentParagraph((prev) => (prev + 1) % paragraphs.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentParagraph((prev) => (prev - 1 + paragraphs.length) % paragraphs.length);
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -48,6 +62,17 @@ export default function Home() {
         >
           Most Commented
         </button>
+      </div>
+
+      <div className="home-default-content">
+        {activeSection === null && <h1>Welcome to the React Developers Forum</h1>}
+        {activeSection === null && (
+          <div className="paragraph-gallery">
+            <button onClick={handlePrev} className="arrow-button prev">←</button>
+            <p>{paragraphs[currentParagraph]}</p>
+            <button onClick={handleNext} className="arrow-button next">→</button>
+          </div>
+        )}
       </div>
 
       <div className={`section ${activeSection === 'recent' ? 'active' : ''}`}>
