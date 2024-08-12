@@ -64,7 +64,7 @@ export default function Posts() {
 
   return (
     <div className="posts-container">
-      <h1>Posts:</h1>
+      {/* <h1>Posts:</h1> */}
       <div className="filter-sort-container">
         <div className="filter-container">
           <label htmlFor="filter">Filter by author:</label>
