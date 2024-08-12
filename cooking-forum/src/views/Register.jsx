@@ -124,7 +124,7 @@ export default function Register() {
             : <span className="password-x"></span>}
         </div>
         <br />
-        <button id="reg-btn" className="register-button" role="button" onClick={register}><span className="text">Register</span></button>
+        <button className="register-button" role="button" onClick={register}>Register</button>
       </form>
     </div>
   );

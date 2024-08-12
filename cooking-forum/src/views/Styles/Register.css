@@ -11,7 +11,7 @@
     /* margin-right: 0px; */
     width: 150px; /* Adjust the label width */
     text-align: right; /* Align text to the right */
-    background-image: linear-gradient(to bottom right, #AF40FF, #00DDEB);
+    background-image: linear-gradient(to bottom right, #0056b3, #007bff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -25,6 +25,7 @@
   .input-name {
     display: flex;
     align-items: flex-start;
+    padding-bottom: 5px;
   }
 
   input:focus, input:hover {
@@ -47,60 +48,32 @@
     justify-content: flex-start;
     align-items: center;
     padding-left: 30%;
-    background-image: linear-gradient(to bottom right, #AF40FF, #5B42F3 50%,#00DDEB);
+    background-image: linear-gradient(to bottom right, #0056b3, #007bff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-.register-button {
-  align-items: center;
-  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
-  border: 0;
-  border-radius: 8px;
-  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  display: flex;
-  font-family: Phantomsans, sans-serif;
-  font-size: 20px;
-  justify-content: center;
-  line-height: 1em;
-  max-width: 100%;
-  min-width: 140px;
-  padding: 3px;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  cursor: pointer;
-  margin-left: 26%;
-}
-
-.register-button:active,
-.register-button:hover {
-  outline: 0;
-}
-
-.register-button span {
-  background-color: rgb(5, 6, 45);
-  padding: 16px 24px;
-  border-radius: 6px;
-  width: 100%;
-  height: 100%;
-  transition: 300ms;
-}
-
-.register-button:hover span {
-  background: none;
-}
-
-@media (min-width: 768px) {
   .register-button {
-    font-size: 24px;
-    min-width: 100px;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 30%;
   }
-}
+  
+  .register-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .register-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 
 .password-check {
     position: relative;
@@ -136,8 +109,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: rgba(152, 65, 252, 0.51) 2px solid;
-    box-shadow: rgba(152, 65, 252, 0.574) 0 15px 30px -5px;
+    /* border: rgba(152, 65, 252, 0.51) 2px solid; */
+    box-shadow: #0056b3 0 15px 30px -5px;
     max-width: 400px;
     padding-bottom: 40px;
     margin-left: 30%;
