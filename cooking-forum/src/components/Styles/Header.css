@@ -58,7 +58,7 @@ header {
     gap: 20px;
     width: 100%;
     justify-content: center;
-    margin-left: -710px;
+    margin-left: -705px;
     margin-bottom: 15px; /* Разстояние от Search компонентата */
   }
 
@@ -112,7 +112,7 @@ header {
     height: 45px;
     width: 45px;
     object-fit: cover;
-    margin-left: 15px;
+    margin-left: 20px;
     margin-top: -5px;
   }
   
@@ -130,7 +130,7 @@ header {
     border-radius: 8px; /* Овални ъгли */
     padding: 10px;
     width: 100%; /* Ширина на контейнера */
-    max-width: 785px; /* Максимална ширина на контейнера (по желание) */
+    max-width: 1285px; /* Максимална ширина на контейнера (по желание) */
     display: block; /* Винаги показан */
   }
   
@@ -142,7 +142,7 @@ header {
   .search-container > .search-results-container {
     margin-left: 25px;
     margin-right: 25px;
-    width: 760px;
+    max-width: 98%;
   }
    
   .search-results div {

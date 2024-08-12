@@ -77,6 +77,7 @@ export default function Search() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search..."
+          className="search-input"
         />
         <select value={type} onChange={handleTypeChange} className="search-selector">
           <option value="posts">Posts</option>

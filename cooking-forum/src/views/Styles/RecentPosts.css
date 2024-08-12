@@ -90,13 +90,15 @@
 .post-content h3 {
     text-align: center;
     margin: 0 0 15px;
+    margin-top: 15px;
     font-size: 24px;
     background-color: white;
 }
 
 .post-content p {
     margin-top: 30px;
-    margin-left: 5px;
+    margin-left: 25px;
+    margin-right: 25px;
     white-space: pre-wrap; 
     word-break: break-word; 
     overflow-wrap: break-word;
@@ -105,10 +107,13 @@
 
 .post-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 25px;
+    
     margin-top: auto; 
     font-size: 14px;
     color: #555;
-    margin-left: 5px;
+    margin-left: 25px;
+    margin-right: 25px;
     background-color: white;
 }
