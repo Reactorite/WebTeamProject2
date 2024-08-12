@@ -1,0 +1,93 @@
+.button-container {
+    display: flex;
+    gap: 10px; 
+    margin-top: 20px;
+  }
+  
+  .action-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .button-edit {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .button-edit:hover {
+    background-color: #0056b3;
+  }
+  
+  .button-delete {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .button-delete:hover {
+    background-color: #c82333;
+  }
+  
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+    background-color: #fff; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    padding: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    max-width: 100%; 
+    margin: 0 auto; 
+  }
+  
+  .edit-form label {
+    font-weight: bold;
+    margin-bottom: 8px; 
+    color: #333; 
+  }
+  
+  .edit-form textarea {
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
+    resize: none; 
+    font-size: 1em; 
+    line-height: 1.5; 
+    color: #333; 
+    box-sizing: border-box; 
+    overflow: hidden; 
+  }
+  
+  .edit-form button {
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: white;
+  }
+  
+  .edit-form .button-save {
+    max-width: 100px;
+    background-color: #28a745;
+  }
+  
+  .edit-form .button-save:hover {
+    background-color: #218838; 
+  }
+  
+  .edit-form .button-cancel {
+    max-width: 100px;
+    background-color: #6c757d; 
+  }
+  
+  .edit-form .button-cancel:hover {
+    background-color: #5a6268; 
+  }
+  

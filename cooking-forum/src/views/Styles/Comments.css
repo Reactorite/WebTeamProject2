@@ -1,0 +1,75 @@
+.comment {
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    position: relative;
+  }
+  
+  .comment-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .comment-content {
+    margin-top: 25px;
+    margin-bottom: 20px; 
+    font-size: 1em;
+    color: #333;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-align: left;
+  }
+
+  .comment-button-like {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: white;
+    background-color: #007bff; 
+    transition: background-color 0.3s ease;
+  }
+  
+  .comment-button-like:hover {
+    background-color: #0056b3; 
+  }
+  
+  .comment-bttns {
+    display: flex;
+    gap: 10px; 
+    margin-top: 10px; 
+  }
+  
+  .comment-bttn-edit, .comment-bttn-delete {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+  }
+  
+  .comment-bttn-edit {
+    background-color: #007bff; 
+  }
+  
+  .comment-bttn-edit:hover {
+    background-color: #0056b3; 
+  }
+  
+  .comment-bttn-delete {
+    background-color: #dc3545; 
+  }
+  
+  .comment-bttn-delete:hover {
+    background-color: #c82333; 
+  }
+  

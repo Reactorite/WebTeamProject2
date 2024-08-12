@@ -93,7 +93,8 @@
     margin-left: 5px;
     white-space: pre-wrap; 
     word-break: break-word; 
-    overflow-wrap: break-word; 
+    overflow-wrap: break-word;
+    text-align: left; 
 }
 
 .post-info {
