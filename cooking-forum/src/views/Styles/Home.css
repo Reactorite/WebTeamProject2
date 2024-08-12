@@ -55,7 +55,6 @@
   
   .home-default-content p {
     font-size: 20px;
-    color: #003366; 
     margin-bottom: 20px;
     width: 300px;
     height: 300px;
@@ -69,6 +68,9 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   
   .paragraph-gallery p {
@@ -76,8 +78,58 @@
     transition: opacity 0.5s ease-in-out;
     flex-grow: 1;
     text-align: center;
-    border: 1px solid #003366;
+    /* border: 1px solid #003366; */
     border-radius: 25px;
+    background: linear-gradient(135deg, #0056b3, #007bff);
+    color: white;
+  }
+
+  .paragraph-gallery p.active {
+    opacity: 1;
+  }
+
+  .paragraph-gallery p.slide-in-left {
+    animation: slide-in-left 0.5s forwards; /* Slide-in from left animation */
+  }
+  
+  .paragraph-gallery p.slide-in-right {
+    animation: slide-in-right 0.5s forwards; /* Slide-in from right animation */
+  }
+
+  @keyframes slide-in-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-out-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
+  @keyframes slide-out-right {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
   }
   
   .arrow-button {
@@ -89,6 +141,14 @@
     border: 1px solid rgb(40, 125, 200);
     padding-bottom: 5px;
     border-radius: 15px;
+  }
+
+  .arrow-button.next:hover {
+    transform: scale(1.1);
+  }
+
+  .arrow-button.prev:hover {
+    transform: scale(1.1);
   }
 
   .arrow-button.prev {

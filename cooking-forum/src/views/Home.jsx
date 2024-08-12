@@ -7,18 +7,28 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
   const [currentParagraph, setCurrentParagraph] = useState(0);
+  const [animationClass, setAnimationClass] = useState('active');
 
   const paragraphs = [
     "Here you can ask questions, give answers or just search for content from like-minded people who share the same interest as you!",
-    "Enjoy our forum and always be kind and respectful to other users."
+    "Enjoy our forum and always be kind and respectful to other users.",
+    "Share code, discuss different topics and learn from others. It's all that simple!",
   ];
 
   const handleNext = () => {
-    setCurrentParagraph((prev) => (prev + 1) % paragraphs.length);
+    setAnimationClass('slide-out-left');
+    setTimeout(() => {
+      setCurrentParagraph((prev) => (prev + 1) % paragraphs.length);
+      setAnimationClass('slide-in-right');
+    }, 0);
   };
 
   const handlePrev = () => {
-    setCurrentParagraph((prev) => (prev - 1 + paragraphs.length) % paragraphs.length);
+    setAnimationClass('slide-out-right');
+    setTimeout(() => {
+      setCurrentParagraph((prev) => (prev - 1 + paragraphs.length) % paragraphs.length);
+      setAnimationClass('slide-in-left');
+    }, 0);
   };
 
   useEffect(() => {
@@ -69,7 +79,7 @@ export default function Home() {
         {activeSection === null && (
           <div className="paragraph-gallery">
             <button onClick={handlePrev} className="arrow-button prev">←</button>
-            <p>{paragraphs[currentParagraph]}</p>
+            <p className={`${animationClass} active`}>{paragraphs[currentParagraph]}</p>
             <button onClick={handleNext} className="arrow-button next">→</button>
           </div>
         )}
