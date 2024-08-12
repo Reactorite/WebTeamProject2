@@ -3,6 +3,7 @@ import { createComment } from "../services/comments.service";
 import { AppContext } from '../state/app.context';
 import { get, ref, update } from "firebase/database";
 import { db } from "../config/firebase-config";
+import './Styles/CreateComment.css'; // Импортиране на CSS файла
 
 // eslint-disable-next-line react/prop-types
 export default function CreateComment({ postId, addComment }) {
@@ -40,9 +41,14 @@ export default function CreateComment({ postId, addComment }) {
   };
 
   return (
-    <div>
+    <div className="create-comment-container">
       <label htmlFor="content">Comment: </label>
-      <textarea value={comment.content} onChange={e => updateComment('content', e.target.value)} name="content" id="content" /><br /><br />
+      <textarea
+        value={comment.content}
+        onChange={e => updateComment('content', e.target.value)}
+        name="content"
+        id="content"
+      />
       <button onClick={handleCreateComment}>Create</button>
     </div>
   );

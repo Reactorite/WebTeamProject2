@@ -1,13 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { ref, onValue, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import Post from '../components/Post';
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom";
 import { deletePost } from "../services/posts.service.js";
 import { AppContext } from '../state/app.context.js';
 import Comments from './Comments.jsx';
 import Modal from '../components/Modal/Modal.jsx';
-
+import './Styles/SinglePost.css'; 
 
 export default function SinglePost() {
   const [post, setPost] = useState(null);
@@ -18,7 +18,10 @@ export default function SinglePost() {
   const [modalMessage, setModalMessage] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
-  const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext)
+  const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext);
+
+  const contentRef = useRef(null);
+  const titleRef = useRef(null);
 
   useEffect(() => {
     return onValue(ref(db, `posts/${id}`), snapshot => {
@@ -34,9 +37,24 @@ export default function SinglePost() {
     });
   }, [id]);
 
+  useEffect(() => {
+    if (isEditing) {
+      adjustTextareaHeight(contentRef.current);
+      adjustTextareaHeight(titleRef.current);
+    }
+  }, [isEditing]);
+
+
+  const adjustTextareaHeight = (textarea) => {
+    if (textarea) {
+      textarea.style.height = 'auto'; 
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+
   function handleEdit() {
     setIsEditing(true);
-    setEditTitle(post.title)
+    setEditTitle(post.title);
     setEditContent(post.content);
   }
 
@@ -63,33 +81,43 @@ export default function SinglePost() {
       setModalMessage(`${error.message} trying to delete the post`);
       setModalOpen(true);
     }
-  }
+  };
 
-  const isAuthor = userData && userData.handle === post?.author
+  const isAuthor = userData && userData.handle === post?.author;
 
   return (
     <div>
       <h1>Single post</h1>
       {post && <Post post={post} />}
       {isEditing ? (
-        <form onSubmit={handleEditSubmit}>
+        <form onSubmit={handleEditSubmit} className="edit-form">
           <label htmlFor="editTitle">Title:</label>
           <textarea
+            id="editTitle"
+            ref={titleRef}
             value={editTitle}
-            onChange={(e) => setEditTitle(e.target.value)}
+            onChange={(e) => {
+              setEditTitle(e.target.value);
+              adjustTextareaHeight(e.target);
+            }}
           />
           <label htmlFor="editContent">Content:</label>
           <textarea
+            id="editContent"
+            ref={contentRef}
             value={editContent}
-            onChange={(e) => setEditContent(e.target.value)}
+            onChange={(e) => {
+              setEditContent(e.target.value);
+              adjustTextareaHeight(e.target);
+            }}
           />
-          <button type="submit">Save</button>
-          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+          <button type="submit" className="button-save">Save</button>
+          <button type="button" onClick={() => setIsEditing(false)} className="button-cancel">Cancel</button>
         </form>
       ) : ((isAuthor && !isBlocked) || isAdmin || isOwner) && (
-        <div>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
+        <div className="button-container">
+          <button onClick={handleEdit} className="action-button button-edit">Edit</button>
+          <button onClick={handleDelete} className="action-button button-delete">Delete</button>
         </div>
       )}
       <Comments postId={id} />

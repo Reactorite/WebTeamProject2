@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { deletePost, getAllPosts } from '../services/posts.service';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom'; // Импортиране на NavLink
 import PropTypes from 'prop-types';
 import { ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import './Styles/UserPosts.css'; 
 
 export default function UserPosts({ author }) {
   const [posts, setPosts] = useState([]);
@@ -60,14 +61,18 @@ export default function UserPosts({ author }) {
     <div>
       <h2>{author}&apos;s Posts</h2>
       {!isEditing && posts.map(post => (
-        <div key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.content}</p><br /><br />
-          <button onClick={() => handleDelete(post.id)}>Delete</button>
-          <button onClick={() => handleEdit(post)}>Edit</button>
+        <div key={post.id} className="two-post-container">
+          <h3 className="two-post-title">
+            <NavLink to={`/posts/${post.id}`}>{post.title}</NavLink> 
+          </h3>
+          <p className="two-post-content">{post.content}</p>
+          <div className="two-post-footer">
+            <button className="two-post-delete-button" onClick={() => handleDelete(post.id)}>Delete</button>
+            <button className="two-post-edit-button" onClick={() => handleEdit(post)}>Edit</button>
+          </div>
         </div>
       ))}
-      {!isEditing && <button onClick={() => navigate(-1)}>Back</button>}
+      {!isEditing && <button className="two-post-back-button" onClick={() => navigate(-1)}>Back</button>}
       {isEditing && (
         <form onSubmit={handleEditSubmit}>
           <label htmlFor="title">Title:</label>
@@ -77,6 +82,7 @@ export default function UserPosts({ author }) {
             value={editTitle}
             onChange={(e) => setEditTitle(e.target.value)}
             placeholder="Title"
+            className="two-post-input"
           /><br />
           <label htmlFor="content">Content:</label>
           <textarea
@@ -84,13 +90,14 @@ export default function UserPosts({ author }) {
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
             placeholder="Content"
+            className="two-post-textarea"
           /><br />
-          <button type="submit">Save</button>
-          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+          <button type="submit" className="two-post-save-button">Save</button>
+          <button type="button" className="two-post-cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
       )}
     </div>
   );
 }
 
-UserPosts.propTypes = { author: PropTypes.string };
+UserPosts.propTypes = { author: PropTypes.string.isRequired };

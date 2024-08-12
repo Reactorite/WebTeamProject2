@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { getAllComments, deleteComment, likeComment, dislikeComment } from "../services/comments.service.js";
 import CreateComment from "./CreateComment";
 import { AppContext } from '../state/app.context.js';
@@ -6,8 +6,9 @@ import { update, ref, get } from "firebase/database";
 import { db } from "../config/firebase-config.js";
 import Modal from "../components/Modal/Modal.jsx";
 import PropTypes from 'prop-types';
+import './Styles/Comments.css'; 
+import { NavLink } from "react-router-dom";
 
-// eslint-disable-next-line react/prop-types
 export default function Comments({ postId }) {
   const { userData, isAdmin, isBlocked, isOwner } = useContext(AppContext);
   const [comments, setComments] = useState([]);
@@ -16,11 +17,26 @@ export default function Comments({ postId }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
+  const contentRef = useRef(null); 
+
   useEffect(() => {
     getAllComments(postId)
       .then(comments => setComments(comments))
       .catch(error => alert(error.message));
   }, [postId]);
+
+  useEffect(() => {
+    if (isEditing && contentRef.current) {
+      adjustTextareaHeight(contentRef.current);
+    }
+  }, [isEditing]);
+
+  const adjustTextareaHeight = (textarea) => {
+    if (textarea) {
+      textarea.style.height = 'auto'; 
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
 
   const addComment = (newComment) => {
     setComments([...comments, newComment]);
@@ -100,52 +116,59 @@ export default function Comments({ postId }) {
   };
 
   return (
-    <div>
+    <div className="comments-container">
       <h2>Comments:</h2>
       {comments.length > 0 ? comments.map(c => {
         const isAuthor = userData && userData.handle === c.author;
 
         return (
-          <div key={c.id}>
-            <div>
-              {c.author} <br />
-              {new Date(c.createdOn).toLocaleString()} <br />
-              {c.content} <br />
-              {!isBlocked && <button onClick={() => toggleLike(c.id)}>
-                {c.likedBy?.includes(userData?.handle) ? 'Dislike' : 'Like'}
-              </button>}
-              {isEditing && c.id === editContent.id ? (
-                <form onSubmit={handleEditSubmit}>
-                  <label htmlFor="editContent">Content:</label>
-                  <textarea
-                    value={editContent.content}
-                    onChange={(e) => setEditContent({ ...editContent, content: e.target.value })}
-                  />
-                  <button type="submit">Save</button>
-                  <button type="button" onClick={() => { setIsEditing(false); setEditContent({ id: '', content: '' }); }}>Cancel</button>
-                </form>
-              ) : ((isAuthor && !isBlocked) || isAdmin || isOwner) && (
-                <div>
-                  <button onClick={() => handleDelete(c.id)}>Delete Comment</button>
-                  <button onClick={() => handleEdit(c.id)}>Edit Comment</button>
-                </div>
-              )}
-            </div> <br />
+          <div key={c.id} className="comment">
+            <div className="comment-info">
+              <p>Comment by: <NavLink to={`/single-user/${c.author}`}>{c.author}</NavLink></p>
+              <p>{new Date(c.createdOn).toLocaleString()}</p>
+            </div>
+            <div className="comment-content">
+              {c.content}
+            </div>
+            {!isBlocked && <button className="comment-button-like" onClick={() => toggleLike(c.id)}>
+              {c.likedBy?.includes(userData?.handle) ? 'Dislike' : 'Like'}
+            </button>}
+            {isEditing && c.id === editContent.id ? (
+              <form className="edit-form" onSubmit={handleEditSubmit}>
+                <label htmlFor="editContent">Content:</label>
+                <textarea
+                  ref={contentRef} 
+                  value={editContent.content}
+                  onChange={(e) => setEditContent({ ...editContent, content: e.target.value })}
+                />
+                <button type="submit" className="button-save">Save</button>
+                <button type="button" className="button-cancel" onClick={() => { setIsEditing(false); setEditContent({ id: '', content: '' }); }}>Cancel</button>
+              </form>
+            ) : ((isAuthor && !isBlocked) || isAdmin || isOwner) && (
+              <div className="comment-bttns">
+                <button className="comment-bttn-edit" onClick={() => handleEdit(c.id)}>Edit Comment</button>
+                <button className="comment-bttn-delete" onClick={() => handleDelete(c.id)}>Delete Comment</button>
+              </div>
+            )}
+            <br />
           </div>
         );
-      }) : 'No Comments yet.'} <br />
-      {!isBlocked ? <CreateComment postId={postId} addComment={addComment} /> : "You are banned and cant have any actions!"} <br />
+      }) : 'No Comments yet.'}
+      <br />
+      {!isBlocked ? <div>
+        <CreateComment postId={postId} addComment={addComment} />
+      </div> : "You are banned and can't have any actions!"}
+      <br />
       <Modal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title="Notification"
         message={modalMessage}
+        className="modal-message"
       />
     </div>
-
   );
 }
-
 
 Comments.propTypes = {
   postId: PropTypes.string.isRequired,
