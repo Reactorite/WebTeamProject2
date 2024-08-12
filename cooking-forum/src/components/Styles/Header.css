@@ -14,11 +14,11 @@ header {
   .header-content {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     width: 100%;
     margin-bottom: 15px;
   }
-  
+
   .header-content h1 {
     font-size: 32px;
     color: #003366; /* Тъмен син */
@@ -29,16 +29,17 @@ header {
   .header-content h4 {
     font-weight: 400;
     color: #666; /* Сив */
-    margin-left: 20px;
+    margin-left: 9px;
   }
   
   /* Лого на React */
   .reactLogo {
     height: 35px;
     width: auto;
-    margin-left: 15px;
+    margin-left: 7px;
+    margin-top: -1px;
     transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
-    animation: spin 20s linear infinite;
+    animation: spin 21s linear infinite;
   }
 
   @keyframes spin {
@@ -57,9 +58,34 @@ header {
     gap: 20px;
     width: 100%;
     justify-content: center;
+    margin-left: -710px;
     margin-bottom: 15px; /* Разстояние от Search компонентата */
   }
+
+  .header-all {
+    display: flex;
+    justify-content: space-between; /* Space out the avatar-wrapper and other elements */
+    align-items: center;
+    width: 100%;
+  }
+
+  .avatar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: auto;
+    justify-content: flex-end;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    position: relative;
+  }
   
+  /* .nav .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } */
+
   /* Стилове за бутоните */
   .nav-button {
     background: none;
@@ -71,6 +97,8 @@ header {
     border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    margin-top: 2.5px;
+    margin-right: -30px;
   }
   
   .nav-button:hover {
@@ -85,6 +113,7 @@ header {
     width: 45px;
     object-fit: cover;
     margin-left: 15px;
+    margin-top: -5px;
   }
   
   /* Стилизира контейнера на Search компонентата */
@@ -166,7 +195,7 @@ header {
   /* Цветова схема за светъл режим */
   @media (prefers-color-scheme: light) {
     header {
-      background-color: rgba(255, 255, 255, 0.9); /* Леко прозрачен бял фон */
+      background-color: rgba(255, 255, 255, 1); /* Леко прозрачен бял фон */
     }
   
     .header-content h1, .header-content h4, .nav-button {

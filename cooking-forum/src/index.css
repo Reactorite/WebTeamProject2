@@ -20,7 +20,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: rgb(100, 185, 255);
+  color: #003366;
 }
 
 nav > a {
@@ -29,14 +29,14 @@ nav > a {
 
 nav > a.active {
   padding-left: 10px;
-  color: rgb(83, 171, 249);
+  color: #003366;
   font-size: 20px;
   padding-bottom: 6px;
-  transition: color 0.3s ease, font-size 0.3s ease, padding-bottom 0.3s ease;
+  transition: color 0.7s ease, font-size 0.3s ease, padding-bottom 0.3s ease;
 }
 
 body {
-  background-color: blanchedalmond;
+  background-color: rgb(236, 252, 255);
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
@@ -78,7 +78,7 @@ button:focus-visible {
     background-color: rgb(250, 250, 240);
   }
   a:hover {
-    color: rgb(100, 185, 255);
+    color: #003366;
   }
   button {
     background-color: transparent;
