@@ -45,7 +45,7 @@ header {
   .reactLogo {
     height: 35px;
     width: auto;
-    margin-left: 7px;
+    margin-left: 9px;
     margin-top: 5px;
     transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
     animation: spin 21s linear infinite;
