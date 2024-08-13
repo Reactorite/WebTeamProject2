@@ -1,16 +1,14 @@
-/* Основен стил за хедъра */
 header {
-    background-color: transparent; /* Прозрачен фон */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лека сянка */
+    background-color: transparent;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     padding: 15px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative; /* За позициониране на Search компонентата */
+    position: relative;
     /* height: 120px; */
   }
   
-  /* Основен стил за съдържанието на хедъра */
   .header-content {
     display: flex;
     align-items: center;
@@ -21,18 +19,17 @@ header {
 
   .header-content h1 {
     font-size: 32px;
-    color: #003366; /* Тъмен син */
+    color: #003366; 
     margin: 0;
     font-weight: 600;
   }
   
   .header-content h4 {
     font-weight: 400;
-    color: #666; /* Сив */
+    color: #666; 
     margin-left: 9px;
   }
   
-  /* Лого на React */
   .reactLogo {
     height: 35px;
     width: auto;
@@ -51,7 +48,7 @@ header {
     }
   }
   
-  /* Навигационен стил */
+
   .nav {
     display: flex;
     align-items: center;
@@ -59,12 +56,12 @@ header {
     width: 100%;
     justify-content: center;
     margin-left: -705px;
-    margin-bottom: 15px; /* Разстояние от Search компонентата */
+    margin-bottom: 15px; 
   }
 
   .header-all {
     display: flex;
-    justify-content: space-between; /* Space out the avatar-wrapper and other elements */
+    justify-content: space-between; 
     align-items: center;
     width: 100%;
   }
@@ -89,8 +86,8 @@ header {
   /* Стилове за бутоните */
   .nav-button {
     background: none;
-    border: 2px solid #003366; /* Тъмен син */
-    color: #003366; /* Тъмен син */
+    border: 2px solid #003366; 
+    color: #003366; 
     font-size: 16px;
     margin: 15px;
     padding: 8px 15px;
@@ -102,11 +99,11 @@ header {
   }
   
   .nav-button:hover {
-    background-color: #003366; /* Тъмен син */
-    color: #ffffff; /* Бяло */
+    background-color: #003366;
+    color: #ffffff; 
   }
   
-  /* Стилизира изображението на профила */
+
   .profilePicture {
     border-radius: 50%;
     height: 45px;
@@ -116,25 +113,24 @@ header {
     margin-top: -5px;
   }
   
-  /* Стилизира контейнера на Search компонентата */
+
   .search-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 10px; /* Разстояние между навигационната лента и Search компонентата */
+    margin-top: 10px; 
   }
   
   .search-container {
-    background: #ffffff; /* Чисто бяло */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лека сянка */
-    border-radius: 8px; /* Овални ъгли */
+    background: #ffffff; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px; 
     padding: 10px;
-    width: 100%; /* Ширина на контейнера */
-    max-width: 1285px; /* Максимална ширина на контейнера (по желание) */
-    display: block; /* Винаги показан */
+    width: 100%; 
+    max-width: 1285px; 
+    display: block; 
   }
   
-  /* Стилизира резултатите от търсенето */
   .search-results {
     margin-top: 20px;
   }
@@ -147,77 +143,76 @@ header {
    
   .search-results div {
     padding: 10px;
-    border-bottom: 1px solid #ddd; /* Лека линия за разделяне на резултатите */
+    border-bottom: 1px solid #ddd;
   }
   
   .search-results div:last-child {
-    border-bottom: none; /* Премахва долната линия за последния елемент */
+    border-bottom: none; 
   }
   
   .search-results h3 {
     font-size: 18px;
-    color: #003366; /* Тъмен син */
+    color: #003366; 
     margin: 0;
   }
   
   .search-results p {
     margin: 5px 0;
-    color: #555; /* По-светъл сив за текста */
+    color: #555; 
   }
   
   .search-results a {
-    color: #003366; /* Тъмен син */
+    color: #003366; 
     text-decoration: none;
     transition: color 0.3s;
   }
   
   .search-results a:hover {
-    color: #00509e; /* Светло син при ховър */
+    color: #00509e; 
   }
   
-  /* Цветова схема за тъмен режим */
   @media (prefers-color-scheme: dark) {
     header {
-      background-color: rgba(0, 0, 0, 0.7); /* Прозрачен черен фон */
+      background-color: rgba(0, 0, 0, 0.7); 
     }
   
     .header-content h1, .header-content h4, .nav-button {
-      color: #ffffff; /* Бял текст за тъмен режим */
+      color: #ffffff; 
     }
   
     .search-container {
-      background: rgba(0, 0, 0, 0.8); /* Прозрачен черен фон за контейнера на Search */
+      background: rgba(0, 0, 0, 0.8); 
     }
   
     .search-results h3, .search-results p, .search-results a {
-      color: #ffffff; /* Бял текст за резултатите от търсенето */
+      color: #ffffff; 
     }
   
     .search-results a:hover {
-      color: #aad4ff; /* Светло син при ховър за тъмен режим */
+      color: #aad4ff; 
     }
   }
   
-  /* Цветова схема за светъл режим */
+
   @media (prefers-color-scheme: light) {
     header {
-      background-color: rgba(255, 255, 255, 1); /* Леко прозрачен бял фон */
+      background-color: rgba(255, 255, 255, 1); 
     }
   
     .header-content h1, .header-content h4, .nav-button {
-      color: #003366; /* Тъмен син текст за светъл режим */
+      color: #003366; 
     }
   
     .search-container {
-      background: #ffffff; /* Чисто бял фон за контейнера на Search */
+      background: #ffffff; 
     }
   
     .search-results h3, .search-results p, .search-results a {
-      color: #333333; /* Тъмен текст за резултатите от търсенето */
+      color: #333333; 
     }
   
     .search-results a:hover {
-      color: #00509e; /* Светло син при ховър за светъл режим */
+      color: #00509e;
     }
   }
   
