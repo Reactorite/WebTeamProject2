@@ -4,10 +4,10 @@ import { getAllPosts } from "../services/posts.service";
 import { getAllComments } from "../services/comments.service";
 import { AppContext } from "../state/app.context";
 import { getAllUsers } from "../services/users.service";
-import './Styles/Search.css'; 
+import './Styles/Search.css';
 
 export default function Search() {
-  const { isAdmin, isOwner } = useContext(AppContext); 
+  const { isAdmin, isOwner } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') ?? '';
   const searchType = searchParams.get('type') ?? 'posts';
@@ -17,7 +17,7 @@ export default function Search() {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    setSearchTerm(''); 
+    setSearchTerm('');
     setResults([]);
   }, [searchType, searchParams]);
 
@@ -52,14 +52,14 @@ export default function Search() {
     }
 
     setResults(fetchedResults);
-    setSearchTerm(''); 
+    setSearchTerm('');
   };
 
   const handleTypeChange = (e) => {
     const newType = e.target.value;
     setType(newType);
-    setSearchParams({ search: '', type: newType }); 
-    setResults([]); 
+    setSearchParams({ search: '', type: newType });
+    setResults([]);
   };
 
   const handleClear = () => {
@@ -67,6 +67,12 @@ export default function Search() {
     setType('posts');
     setSearchParams({ search: '', type: 'posts' });
     setResults([]);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
@@ -78,13 +84,14 @@ export default function Search() {
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search..."
           className="search-input"
+          onKeyDown={handleKeyDown}
         />
         <select value={type} onChange={handleTypeChange} className="search-selector">
           <option value="posts">Posts</option>
           <option value="comments">Comments</option>
           {(isAdmin || isOwner) && <option value="users">Users</option>}
         </select>
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleSearch} onKeyDown={handleKeyDown}>Search</button>
         <button onClick={handleClear} className="clear-button">Clear</button>
       </div>
 

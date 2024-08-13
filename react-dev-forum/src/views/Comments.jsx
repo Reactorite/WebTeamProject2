@@ -6,7 +6,7 @@ import { update, ref, get } from "firebase/database";
 import { db } from "../config/firebase-config.js";
 import Modal from "../components/Modal/Modal.jsx";
 import PropTypes from 'prop-types';
-import './Styles/Comments.css'; 
+import './Styles/Comments.css';
 import { NavLink } from "react-router-dom";
 
 export default function Comments({ postId }) {
@@ -17,7 +17,7 @@ export default function Comments({ postId }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
-  const contentRef = useRef(null); 
+  const contentRef = useRef(null);
 
   useEffect(() => {
     getAllComments(postId)
@@ -33,7 +33,7 @@ export default function Comments({ postId }) {
 
   const adjustTextareaHeight = (textarea) => {
     if (textarea) {
-      textarea.style.height = 'auto'; 
+      textarea.style.height = 'auto';
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
   };
@@ -137,7 +137,7 @@ export default function Comments({ postId }) {
               <form className="edit-form" onSubmit={handleEditSubmit}>
                 <label htmlFor="editContent">Content:</label>
                 <textarea
-                  ref={contentRef} 
+                  ref={contentRef}
                   value={editContent.content}
                   onChange={(e) => setEditContent({ ...editContent, content: e.target.value })}
                 />
@@ -157,7 +157,7 @@ export default function Comments({ postId }) {
       <br />
       {!isBlocked ? <div>
         <CreateComment postId={postId} addComment={addComment} />
-      </div> : <div className="block-msg">"You are banned and can't have any actions!"</div>}
+      </div> : <div className="block-msg">You are banned and can&apos;t have any actions!</div>}
       <br />
       <Modal
         isOpen={modalOpen}

@@ -11,6 +11,10 @@ export default function Posts() {
   const [sortOption, setSortOption] = useState("date");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchPosts = async () => {
       try {
         const postsData = await getAllPosts();
@@ -92,18 +96,18 @@ export default function Posts() {
       <div className="posts-list">
         {filteredPosts.length > 0
           ? filteredPosts.map((p) => (
-              <RecentPosts
-                key={p.id}
-                id={p.id}
-                author={p.author}
-                title={p.title}
-                content={p.content}
-                createdOn={p.createdOn}
-                likeCount={p.likeCount}
-                commentsCounter={p.commentsCounter}
-                authorProfile={p.authorProfile} 
-              />
-            ))
+            <RecentPosts
+              key={p.id}
+              id={p.id}
+              author={p.author}
+              title={p.title}
+              content={p.content}
+              createdOn={p.createdOn}
+              likeCount={p.likeCount}
+              commentsCounter={p.commentsCounter}
+              authorProfile={p.authorProfile}
+            />
+          ))
           : "No Posts"}
       </div>
     </div>

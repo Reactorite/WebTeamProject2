@@ -80,6 +80,12 @@ export default function Register() {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      register();
+    }
+  };
+
   return (
     <div className="register-container">
       <form>
@@ -88,27 +94,27 @@ export default function Register() {
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="handle">Username: </label>
-          <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" /*id="handle"*/ /><br /><br />
+          <input value={user.handle} onChange={updateUser('handle')} type="text" name="handle" /*id="handle"*/ onKeyDown={handleKeyDown} /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="email">Email: </label>
-          <input value={user.email} onChange={updateUser('email')} type="text" name="email" /*id="email"*/ /><br /><br />
+          <input value={user.email} onChange={updateUser('email')} type="text" name="email" /*id="email"*/ onKeyDown={handleKeyDown} /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="firstName">First name: </label>
-          <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" /*id="firstName"*/ /><br /><br />
+          <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" /*id="firstName"*/ onKeyDown={handleKeyDown} /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="lastName">Last name: </label>
-          <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" /*id="lastName"*/ /><br /><br />
+          <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" /*id="lastName"*/ onKeyDown={handleKeyDown} /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="password">Password: </label>
-          <input className="input" value={user.password} onChange={updateUser('password')} type="password" name="password" /*id="password"*/ /><br /><br />
+          <input className="input" value={user.password} onChange={updateUser('password')} type="password" name="password" onKeyDown={handleKeyDown}/*id="password"*/ /><br /><br />
         </div>
         <div className="form-group">
           <label className="input-name" htmlFor="repeatPassword">Repeat Password: </label>
-          <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" />
+          <input value={user.repeatPassword} onChange={updateUser('repeatPassword')} type="password" name="repeatPassword" onKeyDown={handleKeyDown} />
           {user.repeatPassword && (
             <span style={{ color: passwordsMatch ? 'green' : 'red' }}>
               {passwordsMatch ? <span className="password-check"></span> : <span className="password-x"></span>}
@@ -118,13 +124,13 @@ export default function Register() {
         <br />
         <div className="form-group">
           <label className="input-name" htmlFor="secretKey">Secret Key: </label>
-          <input value={secretKey} onChange={updateSecretKey} type="password" name="secretKey" /*id="secretKey"*/ />
+          <input value={secretKey} onChange={updateSecretKey} type="password" name="secretKey" /*id="secretKey"*/ onKeyDown={handleKeyDown} />
           {secretKey.length === 0 ? null : secretKeyMessage.startsWith('✅')
             ? <span className="password-check"></span>
             : <span className="password-x"></span>}
         </div>
         <br />
-        <button className="register-button" role="button" onClick={register}>Register</button>
+        <button className="register-button" role="button" onClick={register} onKeyDown={handleKeyDown}>Register</button>
       </form>
     </div>
   );
