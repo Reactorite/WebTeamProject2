@@ -19,8 +19,8 @@ export default function Header() {
     <header>
       <div className="header-all">
         <div className="header-content">
-          <h1>UNITE</h1>
-          <img src="../../public/React-Logo.png" alt="React Logo" className="reactLogo" />
+          <h1><NavLink to='/'>UNITE</NavLink></h1>
+          <NavLink to='/'><img src="../../public/React-Logo.png" alt="React Logo" className="reactLogo" /></NavLink>
           <h4>REACT DEVELOPERS FORUM</h4>
         </div>
         <nav className="nav">
