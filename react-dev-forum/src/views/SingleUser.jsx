@@ -5,7 +5,7 @@ import RecentPosts from "./RecentPosts";
 import { getAllPosts, likePostCount } from "../services/posts.service";
 import { AppContext } from "../state/app.context";
 import Modal from "../components/Modal/Modal";
-import './Styles/SingleUser.css'; 
+import './Styles/SingleUser.css';
 
 export default function SingleUser() {
   const { userData } = useContext(AppContext);
@@ -14,6 +14,10 @@ export default function SingleUser() {
   const [posts, setPosts] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
