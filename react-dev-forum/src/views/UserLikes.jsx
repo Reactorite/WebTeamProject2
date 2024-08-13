@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../state/app.context';
 import { dislikePost, getPostById, likePost } from '../services/posts.service';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom'; 
 import { onValue, ref } from "firebase/database";
 import { db } from "../config/firebase-config";
+import './Styles/UserLikes.css'
 
 export default function UserLikes() {
   const { userData } = useContext(AppContext);
@@ -68,25 +69,32 @@ export default function UserLikes() {
   };
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error">{error}</div>;
   }
 
   return (
-    <div>
+    <div className="threes-post-container">
       {posts.length > 0 ? posts.map(post => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-          <button onClick={() => toggleLike(post)}>
-            {post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
-          </button>
+        <div key={post.id} className="three-post-container"> 
+          <h2 className="three-post-title">
+            <NavLink to={`/posts/${post.id}`}>{post.title}</NavLink> 
+          </h2>
+          <p className="three-post-content">{post.content}</p>
+          <div className="three-post-footer">
+            <button 
+              className="three-post-like-button"
+              onClick={() => toggleLike(post)}
+            >
+              {post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
+            </button>
+          </div>
         </div>
-      )) : <div>No liked posts.</div>}
-      <button onClick={() => navigate(-1)}>Back</button>
+      )) : <div className="error">No liked posts.</div>}
+      <button className="three-post-back-button" onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 }
