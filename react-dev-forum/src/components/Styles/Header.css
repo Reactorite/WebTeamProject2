@@ -30,11 +30,23 @@ header {
     margin-left: 9px;
   }
   
+  .logoUnite {
+    color: #003366;
+  }
+
+  .logoUnite:hover {
+    color: rgb(40, 125, 200);
+  }
+
+  .logoUnite:active {
+    color: #00509e;
+  }
+
   .reactLogo {
     height: 35px;
     width: auto;
     margin-left: 7px;
-    margin-top: -1px;
+    margin-top: 5px;
     transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
     animation: spin 21s linear infinite;
   }
