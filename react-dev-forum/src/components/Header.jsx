@@ -40,7 +40,7 @@ export default function Header() {
         <div className="avatar-wrapper">
           {user && <button onClick={logout} className="nav-button">LOGOUT</button>}
           <NavLink to="/user">
-            <img src={userData.profilePictureURL || "../../images/default_avatar.png"} alt="Profile" className="profilePicture" />
+            <img src={userData.profilePictureURL || "https://static.independent.co.uk/2022/06/28/10/anonymous%20terra%20luna%20crypto.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"} alt="Profile" className="profilePicture"} alt="Profile" className="profilePicture" />
           </NavLink>
         </div>
         )}
