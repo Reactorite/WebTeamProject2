@@ -157,7 +157,7 @@ export default function Comments({ postId }) {
       <br />
       {!isBlocked ? <div>
         <CreateComment postId={postId} addComment={addComment} />
-      </div> : "You are banned and can't have any actions!"}
+      </div> : <div className="block-msg">"You are banned and can't have any actions!"</div>}
       <br />
       <Modal
         isOpen={modalOpen}
