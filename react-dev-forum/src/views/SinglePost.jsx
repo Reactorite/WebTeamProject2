@@ -7,7 +7,7 @@ import { deletePost } from "../services/posts.service.js";
 import { AppContext } from '../state/app.context.js';
 import Comments from './Comments.jsx';
 import Modal from '../components/Modal/Modal.jsx';
-import './Styles/SinglePost.css'; 
+import './Styles/SinglePost.css';
 
 export default function SinglePost() {
   const [post, setPost] = useState(null);
@@ -22,6 +22,10 @@ export default function SinglePost() {
 
   const contentRef = useRef(null);
   const titleRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     return onValue(ref(db, `posts/${id}`), snapshot => {
@@ -47,7 +51,7 @@ export default function SinglePost() {
 
   const adjustTextareaHeight = (textarea) => {
     if (textarea) {
-      textarea.style.height = 'auto'; 
+      textarea.style.height = 'auto';
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
   };
