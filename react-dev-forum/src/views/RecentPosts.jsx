@@ -25,12 +25,10 @@ const RecentPosts = ({ id, author, title, content, createdOn, likeCount, comment
 
     const {
         profilePictureURL = '',
-        firstName = '',
-        lastName = '',
         isAdmin = false,
         isOwner = false,
         isBlocked = false
-    } = authorProfile || {}; 
+    } = authorProfile || {};
 
     const rank = isAdmin ? 'Admin' : isOwner ? 'Owner' : 'User';
     const status = isBlocked ? 'Blocked' : 'Active';
@@ -71,7 +69,7 @@ const RecentPosts = ({ id, author, title, content, createdOn, likeCount, comment
                     <h3>
                         <Link to={`/posts/${id}`}>{title}</Link>
                     </h3>
-                    <p>{content}</p>
+                    {content.length > 900 ? <p>{`${content.slice(0, 900)}...`}<NavLink to={`/posts/${id}`}>Click to read more</NavLink></p> : <p>{content}</p>}
                 </div>
                 <div className="post-info">
                     <p><strong>Posted:</strong> {new Date(createdOn).toLocaleString()}</p>
